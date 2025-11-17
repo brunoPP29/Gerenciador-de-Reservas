@@ -10,6 +10,7 @@
     @if(session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
+        <a href="login">Logar</a>
     </div>
 @endif
 <form method="POST">

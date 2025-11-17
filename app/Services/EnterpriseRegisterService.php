@@ -1,16 +1,16 @@
 <?php
 
 namespace App\Services;
-use App\Models\Register;
+use App\Models\EnterpriseRegister;
 use Illuminate\Support\Facades\Hash;
 
-class RegisterService{
+class EnterpriseRegisterService{
 
     
 
     public function checkFields($req){
     $req->validate([
-        'user' => ['required', 'string', 'min:3', 'max:50'],
+        'name' => ['required', 'string', 'min:3', 'max:50'],
         'email' => ['required', 'email', 'max:255', 'unique:users,email'],
         'password' => [
             'required',
@@ -19,8 +19,11 @@ class RegisterService{
             'regex:/[a-z]/',
             'regex:/[A-Z]/',
             'regex:/[0-9]/',
-            'regex:/[@$!%*#?&]/',
-        ],
+            'regex:/[@$!%*#?&]/'],
+        'phone' => [
+            'required',
+            'regex:/^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/'
+]
     ]);
 
     return true;
@@ -29,10 +32,11 @@ class RegisterService{
 
     public function register($req){
 
-    $user = Register::create([
-        'user' => $req->user,
+    $user = EnterpriseRegister::create([
+        'name' => $req->name,
+        'phone' => $req->phone,
         'email' => $req->email,
-        'password' => Hash::make($req->password), // nunca armazene senha sem hash
+        'password' => Hash::make($req->password),
     ]);
     }
 

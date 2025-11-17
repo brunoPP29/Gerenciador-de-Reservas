@@ -1,15 +1,23 @@
 <?php
+
     namespace App\Models;
 
     use Illuminate\Database\Eloquent\Model;
 
-    class EnterpriseLogin extends Model{
+    class EnterpriseRegister extends Model{
         protected $table = 'enterprise';
+        
+        public $timestamps = false; 
 
         protected $fillable = [
+            'name',
+            'password',
             'email',
-            'password'
+            'phone'
 ];
     }
+
+?>
+
 
 ?>

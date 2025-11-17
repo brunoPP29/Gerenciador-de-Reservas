@@ -7,6 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="Loggout">Sair</a>
+    <a href="loggout">Sair</a>
 </body>
 </html>

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Services\LoginService;
 use Illuminate\Http\Request;
@@ -23,30 +24,33 @@ class ReservasController extends Controller
         return view($redirect); // renderiza a view correta
     }
 
-    public function login(Request $req){
-        $checked = $this->service->checkFields($req);
-        if ($checked) {
-            $user = $req->input('user');
-            $pass = $req->input('password');
-            $login = Login::where('user',$user)
-                            ->where('password', $pass)
-                            ->first();
+public function login(Request $req)
+{
+    // Validação
+    $req->validate([
+        'user' => 'required|string',
+        'password' => 'required|string',
+    ]);
 
+    $userInput = $req->input('user');
+    $passInput = $req->input('password');
 
-            if ($login) {
-                session()->put('logado', true);
-                return view('HomePage');
-            }else{
-                $data['message'] = 'Verifique todos os Campos';
-                return view('LoginPage', $data);
-            }
-        }else{
-            $data['message'] = 'Verifique todos os Campos';
-            return view('LoginPage', $data);
-        }
+    $user = Login::where('user', $userInput)->first();
+
+    if ($user && Hash::check($passInput, $user->password)) {
+        session()->put('logado', true);
+        return view('HomePage');
     }
+
+    // Se falhar login
+    return redirect()->back()->withInput()->with('error', 'Usuário ou senha incorretos!');
+}
+
+
     public function loggout(){
         session()->put('logado', false);
+        session()->put('logadoenterprise', false);
+
         return redirect('/');
     }
 }

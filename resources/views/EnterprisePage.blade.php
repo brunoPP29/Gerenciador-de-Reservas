@@ -7,5 +7,6 @@
 </head>
 <body>
     Estamos logados como empresa
+    <a href="loggout">Sair</a>
 </body>
 </html>
