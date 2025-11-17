@@ -7,20 +7,25 @@
     <title>Document</title>
 </head>
 <body>
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 <form method="POST">
     @csrf
 
-    <input type="text" name="name" value="{{ old('name', '') }}">
+    <input placeholder="user" type="text" name="user" value="{{ old('user', '') }}">
     @error('name')
         <p>{{ $message }}</p> 
     @enderror
 
-    <input type="email" name="email" value="{{ old('email', '') }}">
+    <input placeholder="email" type="email" name="email" value="{{ old('email', '') }}">
     @error('email')
         <p>{{ $message }}</p>
     @enderror
 
-    <input type="text" name="password">
+    <input placeholder="password" type="text" name="password">
     @error('password')
         <p>{{ $message }}</p>
     @enderror

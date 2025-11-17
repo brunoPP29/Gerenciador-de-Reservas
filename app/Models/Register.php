@@ -6,6 +6,8 @@
 
     class Register extends Model{
         protected $table = 'users';
+        
+        public $timestamps = false; 
 
         protected $fillable = [
             'user',

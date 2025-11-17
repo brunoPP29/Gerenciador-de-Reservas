@@ -21,7 +21,9 @@ class RegisterController extends Controller{
     }
 
     public function register(Request $req){
-        return $validationFields = $this->service->checkFields($req);
+        $validationFields = $this->service->checkFields($req);
+        $insert = $this->service->register($req);
+        return redirect()->back()->with('success', 'Criado com sucesso!');
         
 
     }
