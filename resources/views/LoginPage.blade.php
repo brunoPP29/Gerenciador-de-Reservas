@@ -16,5 +16,8 @@
         <input name="password" type="password" placeholder="password">
         <input type="submit" value="Logar!">
     </form>
+    <div>
+        <a href="enterprise">Sou empresa</a>
+    </div>
 </body>
 </html>
