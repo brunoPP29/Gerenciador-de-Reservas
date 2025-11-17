@@ -10,7 +10,7 @@ class RegisterService{
 
     public function checkFields($req){
     $req->validate([
-        'user' => ['required', 'string', 'min:3', 'max:50'],
+        'user' => ['required', 'string', 'min:3', 'max:50', 'unique:users,user'],
         'email' => ['required', 'email', 'max:255', 'unique:users,email'],
         'password' => [
             'required',

@@ -11,7 +11,7 @@ class EnterpriseRegisterService{
     public function checkFields($req){
     $req->validate([
         'name' => ['required', 'string', 'min:3', 'max:50'],
-        'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+        'email' => ['required', 'email', 'max:255', 'unique:enterprise,email'],
         'password' => [
             'required',
             'string',
@@ -22,7 +22,8 @@ class EnterpriseRegisterService{
             'regex:/[@$!%*#?&]/'],
         'phone' => [
             'required',
-            'regex:/^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/'
+            'regex:/^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/',
+            'unique:enterprise,phone'
 ]
     ]);
 
