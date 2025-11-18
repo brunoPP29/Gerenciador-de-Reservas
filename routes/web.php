@@ -17,4 +17,4 @@ Route::post('/enterprise', [EnterpriseLoginController::class, 'login']);
 Route::get('/registerEnterprise', [EnterpriseRegisterController::class, 'index']);
 Route::post('/registerEnterprise', [EnterpriseRegisterController::class, 'register']);
 Route::get('/enterprise/registerProduct', [EnterpriseProductController::class, 'index']);
-Route::post('/enterprise/registerProduct', [EnterpriseProductController::class, 'index']);
+Route::post('/enterprise/registerProduct', [EnterpriseProductController::class, 'register']);

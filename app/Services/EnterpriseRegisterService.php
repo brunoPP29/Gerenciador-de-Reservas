@@ -56,7 +56,7 @@ class EnterpriseRegisterService{
     public function databaseCheck($email)
     {
         // nome seguro para tabelas
-        $tableBase = 'enterprise_' . preg_replace('/[^a-zA-Z0-9]/', '_', $email);
+        $tableBase = preg_replace('/[^a-zA-Z0-9]/', '_', $email);
 
         $productsTable = $tableBase . '_products';
         $reservationsTable = $tableBase . '_reservations';
@@ -79,9 +79,6 @@ class EnterpriseRegisterService{
                 $table->time('opens_at')->default('08:00'); // abre
                 $table->time('closes_at')->default('22:00'); // fecha
                 $table->text('description')->nullable(); // descrição
-                $table->boolean('active')->default(true); // ativo / inativo
-
-                $table->timestamps();
             });
         }
 

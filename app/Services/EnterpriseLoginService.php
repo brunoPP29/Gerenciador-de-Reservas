@@ -24,9 +24,11 @@ public function login($req)
         'password' => 'required|string',
     ]);
 
-    $email = EnterpriseLogin::where('email', $req->email)->first();
+    $infos = EnterpriseLogin::where('email', $req->email)->first();
 
-    if ($email && Hash::check($req->password, $email->password)) {
+    if ($infos && Hash::check($req->password, $infos->password)) {
+        session()->put('tableOrigin', $infos->email);
+        echo session('tableOrigin');
         session()->put('logadoenterprise', true);
         return true;
     }
