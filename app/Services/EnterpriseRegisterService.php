@@ -11,7 +11,7 @@ class EnterpriseRegisterService{
 
     public function checkFields($req){
         $req->validate([
-            'name' => ['required', 'string', 'min:3', 'max:50'],
+            'name' => ['required', 'string', 'min:3', 'max:50', 'unique:enterprise,name'],
             'email' => ['required', 'email', 'max:255', 'unique:enterprise,email'],
             'password' => [
                 'required',
