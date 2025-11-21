@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\Store;
 use App\Models\EnterpriseProduct;
 use App\Models\EnterpriseLogin;
+use App\Models\DynamicTable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Hash;
@@ -32,12 +33,27 @@ class StoreService{
 
     }
 
-    public function getIdProduct($nameItem){
-        $product = EnterpriseProduct::where('name', $nameItem)->first();
+    public function getIdProduct($nameItem, $tbProducts){
 
-            if ($product) {
-                return $product->id; 
-            }
+    $product = DB::table($tbProducts)
+        ->where('name', $nameItem)
+        ->first();
+
+    return $product ? $product->id : null;
+
+
+    }
+
+        public function saveReservation($table, $data){
+        // garante que created_at e updated_at serão inseridos
+        $data['created_at'] = now();
+        $data['updated_at'] = now();
+
+        // usa model dinâmico
+        $dynamic = new DynamicTable();
+        $dynamic->setTableName($table);
+
+        return DB::table($table)->insert($data);
     }
 
 }

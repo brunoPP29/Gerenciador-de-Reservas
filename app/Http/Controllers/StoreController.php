@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\StoreService;
 use Illuminate\Http\Request;
 use App\Reservas;
+use Illuminate\Support\Facades\DB;
 use App\Models\Store;
 
 
@@ -28,7 +29,7 @@ class StoreController extends Controller
             if ($name != null) {
                 $tbReservation = $empresa.'_reservations';
                 $tbProducts = $empresa.'_products';
-                $idProduct = $this->service->getIdProduct($name);
+                $idProduct = $this->service->getIdProduct($name, $tbProducts, $databaseOrigin);
                 return view('BookPage', compact('tbReservation', 'tbProducts', 'name', 'idProduct'));
             }else{
                 return view('ProductsPage', compact('databaseOrigin', 'dadosEmpresa', 'empresa'));
@@ -38,6 +39,21 @@ class StoreController extends Controller
          }    
          
          
+    }
+
+
+    public function reserve(Request $request)
+    {
+        // tabela onde salvar (ex: empresa123_reservations)
+        $table = $request->input('where_to');
+
+        // todos os dados do formulário, exceto o campo da tabela
+        $data = $request->except(['where_to']);
+
+        // salva no banco
+        $this->service->saveReservation($table, $data);
+
+        return back()->with('success', 'Reserva salva com sucesso!');
     }
 
 

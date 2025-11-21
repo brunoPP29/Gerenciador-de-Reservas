@@ -1,10 +1,10 @@
-<form action="" method="POST">
+<form action="book" method="POST">
     @csrf
 
     <input type="hidden" value="{{ $tbReservation }}" name="where_to">
-    <input type="hidden" value="{{ $name }}" name="product">
     <input type="hidden" value="{{ $tbProducts }}" name="Products">
     <input type="hidden" value="{{ $idProduct }}" name="product_id">
+    <input type="hidden" value="{{ $name }}" name="product">
 
     <label for="date">Data:</label>
     <input type="date" name="date" id="date" required>

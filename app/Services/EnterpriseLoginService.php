@@ -28,7 +28,6 @@ public function login($req)
 
     if ($infos && Hash::check($req->password, $infos->password)) {
         session()->put('tableOrigin', $infos->email);
-        echo session('tableOrigin');
         session()->put('logadoenterprise', true);
         return true;
     }
