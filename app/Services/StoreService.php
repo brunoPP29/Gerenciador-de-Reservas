@@ -2,6 +2,7 @@
 
 namespace App\Services;
 use App\Models\Store;
+use App\Models\EnterpriseProduct;
 use App\Models\EnterpriseLogin;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -29,6 +30,14 @@ class StoreService{
         }
 
 
+    }
+
+    public function getIdProduct($nameItem){
+        $product = EnterpriseProduct::where('name', $nameItem)->first();
+
+            if ($product) {
+                return $product->id; 
+            }
     }
 
 }
