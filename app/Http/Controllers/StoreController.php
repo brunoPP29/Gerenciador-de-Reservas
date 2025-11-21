@@ -18,15 +18,23 @@ class StoreController extends Controller
         $this->service = $service;
     }
 
-    public function index($empresa)
+    public function index($empresa, $name = null)
     {
         
         $databaseOrigin = $this->service->checkEnterprise($empresa);
+        $dadosEmpresa = $this->service->getEnterprise($empresa);
         if ($databaseOrigin) {
-                return view('ProductsPage', compact('databaseOrigin'));
-                }else{
-                    return view('404Page');
-                }       
+            //se tiver parametros
+            if ($name != null) {
+                return view('BookPage');
+            }else{
+                return view('ProductsPage', compact('databaseOrigin', 'dadosEmpresa'));
+            }
+            }else{
+                return view('404Page');
+         }    
+         
+         
     }
 
 

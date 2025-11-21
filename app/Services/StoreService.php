@@ -2,6 +2,7 @@
 
 namespace App\Services;
 use App\Models\Store;
+use App\Models\EnterpriseLogin;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Hash;
@@ -9,13 +10,25 @@ use Illuminate\Support\Facades\Hash;
 class StoreService{
 
     public function checkEnterprise($empresa){
-        $empresa = $empresa.'_products';;
-        if (Schema::hasTable($empresa)) {
-            $produtos = DB::table($empresa)->get();
+        $tbprodutos = $empresa.'_products';;
+        if (Schema::hasTable($tbprodutos)) {
+            $produtos = DB::table($tbprodutos)->get();
             return $produtos;
         } else {
             $empresa = collect(); // retorna coleção vazia
         }
+    }
+
+    public function getEnterprise($empresa){
+        $parts = explode('_', $empresa);
+        $email =  strtolower($parts[0].'@'.implode('.', array_slice($parts, 1)));
+        $emailChecked = EnterpriseLogin::where('email', $email)->first();
+
+        if ($emailChecked != '') {
+            return $enterpriseInfos = $emailChecked;
+        }
+
+
     }
 
 }

@@ -2,10 +2,11 @@
     <p>Nenhum produto encontrado.</p>
 @else
     <ul>
+        Produtos da empresa {{ $dadosEmpresa->name }}
     @foreach($databaseOrigin as $produto)
         <li>
                 <strong>{{ $produto->name }}</strong> - R$ {{ $produto->price_per_hour }}
-                <a href="?name={{ $produto->name }}">Reservar</a>
+                <a href="/reservas/public/loja/{{ $produto->name }}">Reservar</a>
         </li>
     @endforeach
     </ul>
