@@ -33,13 +33,12 @@ class StoreService{
 
     }
 
-    public function getIdProduct($nameItem, $tbProducts){
+    public function getProduct($nameItem, $tbProducts){
 
-    $product = DB::table($tbProducts)
+    return $product = DB::table($tbProducts)
         ->where('name', $nameItem)
         ->first();
 
-    return $product ? $product->id : null;
 
 
     }

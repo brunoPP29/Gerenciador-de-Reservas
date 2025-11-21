@@ -29,8 +29,8 @@ class StoreController extends Controller
             if ($name != null) {
                 $tbReservation = $empresa.'_reservations';
                 $tbProducts = $empresa.'_products';
-                $idProduct = $this->service->getIdProduct($name, $tbProducts, $databaseOrigin);
-                return view('BookPage', compact('tbReservation', 'tbProducts', 'name', 'idProduct'));
+                $productInfo = $this->service->getProduct($name, $tbProducts);
+                return view('BookPage', compact('tbReservation', 'tbProducts', 'name', 'productInfo'));
             }else{
                 return view('ProductsPage', compact('databaseOrigin', 'dadosEmpresa', 'empresa'));
             }
