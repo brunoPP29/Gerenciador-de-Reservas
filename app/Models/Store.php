@@ -12,4 +12,15 @@ class Store extends Model
 
     public $timestamps = false; // sem created_at/updated_at
 
+    protected $fillable = [
+    'product_id',
+    'product',
+    'date',
+    'start_time',
+    'end_time',
+    'client_name',
+    'client_phone',
+    'status'
+];
+
 }

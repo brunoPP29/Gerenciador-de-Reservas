@@ -34,8 +34,8 @@ public function checkLogin()
             'name' => $req->name,
             'price_per_hour' => $req->price_per_hour ?? 0,
             'duration_minutes' => $req->duration_minutes ?? 60,
-            'opens_at' => $req->opens_at ?? '08:00',
-            'closes_at' => $req->closes_at ?? '22:00',
+            'opens_at' => $req->opens_at,
+            'closes_at' => $req->closes_at,
             'description' => $req->description ?? '',
         ]);
 

@@ -20,6 +20,6 @@ Route::post('/registerEnterprise', [EnterpriseRegisterController::class, 'regist
 Route::get('/enterprise/registerProduct', [EnterpriseProductController::class, 'index']);
 Route::post('/enterprise/registerProduct', [EnterpriseProductController::class, 'register']);
 Route::get('/loja/{empresa}', [StoreController::class, 'index']);
-Route::get('/loja/{empresa}/{name?}', [StoreController::class, 'index']);
-Route::post('/loja/{empresa}/book', [StoreController::class, 'reserve']);
+Route::get('/loja/{empresa}/{name}', [StoreController::class, 'index']);
+Route::post('/loja/{empresa}/{name}', [StoreController::class, 'reserve']);
 

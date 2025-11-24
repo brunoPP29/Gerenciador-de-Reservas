@@ -1,5 +1,5 @@
 @if($productInfo)
-<form method="POST">
+<form GIT method="POST">
     @csrf
 
     <!-- Tabelas dinâmicas -->
@@ -37,10 +37,10 @@
            min="{{ $productInfo->opens_at ?? '' }}" 
            max="{{ $productInfo->closes_at ?? '' }}" 
            required>
-
+//AJUSTAR
+           <label for="client_name">Nome do Cliente:</label>
+           <input type="hidden" value="" name="client_name" id="client_name">
     <!-- Dados do cliente -->
-    <label for="client_name">Nome do Cliente:</label>
-    <input type="text" name="client_name" id="client_name">
 
     <label for="client_phone">Telefone do Cliente:</label>
     <input type="text" name="client_phone" id="client_phone">

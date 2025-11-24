@@ -21,9 +21,10 @@ class StoreController extends Controller
 
     public function index($empresa, $name = null)
     {
-        
+
         $databaseOrigin = $this->service->checkEnterprise($empresa);
         $dadosEmpresa = $this->service->getEnterprise($empresa);
+        $customerName = session('userName');
         if ($databaseOrigin) {
             //se tiver parametros
             if ($name != null) {
@@ -42,18 +43,24 @@ class StoreController extends Controller
     }
 
 
-    public function reserve(Request $request)
-    {
+    public function reserve(Request $request){
+
+        $checkLogin = $this->service->checkLogin();
+
+        if ($checkLogin !== true) {
+            return redirect('/');
+        }
+
         // tabela onde salvar (ex: empresa123_reservations)
         $table = $request->input('where_to');
 
         // todos os dados do formulário, exceto o campo da tabela
-        $data = $request->except(['where_to']);
+        $data = $request->except(['where_to', '_token', 'Products', 'product']);
 
         // salva no banco
         $this->service->saveReservation($table, $data);
 
-        return back()->with('success', 'Reserva salva com sucesso!');
+        return back()->with('success', 'Reserva salva com sucesso!',);
     }
 
 

@@ -11,6 +11,18 @@ use Illuminate\Support\Facades\Hash;
 
 class StoreService{
 
+    public function checkLogin(){
+        $url = url()->current();
+
+        if (session('logado') === true) {
+            //Tudo bem pode seguir esta logado
+        }else{
+            //Não logou precisa redirect pro login e depois reenviar pra lista anterior
+            session()->put('urlAfter', $url);
+
+        }
+    }
+
     public function checkEnterprise($empresa){
         $tbprodutos = $empresa.'_products';;
         if (Schema::hasTable($tbprodutos)) {

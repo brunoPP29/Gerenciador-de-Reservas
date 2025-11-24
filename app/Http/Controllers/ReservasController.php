@@ -38,6 +38,12 @@ public function login(Request $req)
     $user = Login::where('user', $userInput)->first();
 
     if ($user && Hash::check($passInput, $user->password)) {
+        if (session('urlAfter') == true) {
+            return redirect((string) session('urlAfter'));
+            session()->put('logado', true);
+            session()->put('urlAfter', false);
+            session()->put('logado', $req->input('user'));
+        }
         session()->put('logado', true);
         return view('HomePage');
     }
