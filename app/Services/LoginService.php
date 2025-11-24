@@ -5,19 +5,15 @@ class LoginService
 {
     public function checkLogin()
     {
+
+
         if (session('logado') === true) {
+            session()->put('urlAfter', false);
             return 'HomePage';
         } else {
-            return 'LoginPage';
             session()->put('logado', false);
+            return 'LoginPage';
         }
     }
 
-    public function checkFields($req){
-        if ($req->input('user') && $req->input('password')) {
-            return true;
-        }else{
-            return false;
-        }
-    }
 }

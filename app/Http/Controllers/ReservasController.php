@@ -39,13 +39,14 @@ public function login(Request $req)
 
     if ($user && Hash::check($passInput, $user->password)) {
         if (session('urlAfter') == true) {
-            return redirect((string) session('urlAfter'));
             session()->put('logado', true);
-            session()->put('urlAfter', false);
-            session()->put('logado', $req->input('user'));
-        }
+            session()->put('userName', $req->input('user'));
+            return redirect((string) session('urlAfter'));
+        }else{
         session()->put('logado', true);
+        session()->put('userName', $req->input('user'));
         return view('HomePage');
+        }
     }
 
     // Se falhar login
@@ -56,7 +57,7 @@ public function login(Request $req)
     public function loggout(){
         session()->put('logado', false);
         session()->put('logadoenterprise', false);
-
+        session()->put('userName', false);
         return redirect('/');
     }
 }

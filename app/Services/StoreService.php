@@ -15,10 +15,11 @@ class StoreService{
         $url = url()->current();
 
         if (session('logado') === true) {
-            //Tudo bem pode seguir esta logado
+            session()->put('urlAfter', false);
+            return true;
         }else{
-            //Não logou precisa redirect pro login e depois reenviar pra lista anterior
             session()->put('urlAfter', $url);
+            return false;
 
         }
     }

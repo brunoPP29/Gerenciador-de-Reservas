@@ -47,7 +47,8 @@ class StoreController extends Controller
 
         $checkLogin = $this->service->checkLogin();
 
-        if ($checkLogin !== true) {
+        if ($checkLogin === true) {
+        }elseif ($checkLogin === false) {
             return redirect('/');
         }
 
