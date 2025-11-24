@@ -56,17 +56,31 @@ class StoreService{
 
     }
 
-        public function saveReservation($table, $data){
-        // garante que created_at e updated_at serão inseridos
-        $data['created_at'] = now();
-        $data['updated_at'] = now();
+    public function hasConflict($table, $date, $start, $end)
+        {
+            return DB::table($table)
+                ->where('date', $date)
+                ->where(function($q) use ($start, $end) {
+                    $q->where('start_time', '<', $end)
+                    ->where('end_time', '>', $start);
+                })
+                ->exists();
+        }
 
-        // usa model dinâmico
-        $dynamic = new DynamicTable();
-        $dynamic->setTableName($table);
+    public function saveReservation($table, $data){
+            // checar conflito
+            if ($this->hasConflict($table, $data['date'], $data['start_time'], $data['end_time'])) {
+                return false; // conflito detectado
+            }
 
-        return DB::table($table)->insert($data);
-    }
+            // garante timestamps
+            $data['created_at'] = now();
+            $data['updated_at'] = now();
+
+            return DB::table($table)->insert($data);
+        }
+
+
 
 }
 

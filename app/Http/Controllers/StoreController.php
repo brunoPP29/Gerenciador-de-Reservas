@@ -44,25 +44,24 @@ class StoreController extends Controller
 
 
     public function reserve(Request $request){
-
-        $checkLogin = $this->service->checkLogin();
-
-        if ($checkLogin === true) {
-        }elseif ($checkLogin === false) {
-            return redirect('/');
-        }
-
-        // tabela onde salvar (ex: empresa123_reservations)
-        $table = $request->input('where_to');
-
-        // todos os dados do formulário, exceto o campo da tabela
-        $data = $request->except(['where_to', '_token', 'Products', 'product']);
-
-        // salva no banco
-        $this->service->saveReservation($table, $data);
-
-        return back()->with('success', 'Reserva salva com sucesso!',);
+    // checar login
+    $checkLogin = $this->service->checkLogin();
+    if ($checkLogin === false) {
+        return redirect('/');
     }
+
+    
+    // nome da tabela onde salvar (ex: admin_admin_com_reservations)
+    $table = $request->input('where_to');
+    // pega os dados sem lixo do form
+    $data = $request->except(['where_to', '_token', 'Products', 'product']);
+    // tentar salvar
+    $saved = $this->service->saveReservation($table, $data);
+    if (!$saved) {
+        return back()->with('error', 'Esse horário já está reservado!');
+    }
+    return back()->with('success', 'Reserva salva com sucesso!');
+}
 
 
 }

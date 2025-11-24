@@ -26,7 +26,11 @@ public function __construct(EnterpriseProductService $service)
 
     public function register(Request $req){
         $register = $this->service->register($req);
-        return $register;
+        if (!$register) {
+            return back()->with('error', 'Não foi possível cadastrar o produto, tente novamente!');
+    }
+        return back()->with('success', 'Produto salvo com sucesso!');
+        }
     }
 
-}
+
