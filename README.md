@@ -217,13 +217,12 @@ Contribuições são bem-vindas! Se você deseja contribuir, siga os passos:
 ## 🗺️ Roadmap (O que falta no projeto)
 
 Esta seção lista as principais áreas que precisam de desenvolvimento ou melhoria para tornar o projeto completo e robusto.
-| Funcionalidade/Melhoria | Implementado | Observações |
+| Funcionalidade/Melhoria | Implementado |
 | :--- | :---: | :--- |
 | **Documentação Completa**| Detalhar a API, o fluxo de dados e as regras de negócio. |
 | **Painel de Gerenciamento (Empresa)**| Interface para empresas visualizarem e gerenciarem suas reservas. |
 | **Painel de Gerenciamento (Cliente)**| Interface para clientes visualizarem, alterarem e cancelarem suas reservas. |
 | **Confirmação de Reserva (Email/Notificação)**| Implementar sistema de notificação para clientes e empresas. |
-| **Refatoração de Controllers**| Continuar a refatoração dos Controllers restantes (ex: `EnterpriseProductController`) para o padrão Controller Magro/Service. |
 
 
 ## 📄 Licença
