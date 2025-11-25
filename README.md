@@ -231,12 +231,4 @@ O projeto está licenciado sob a licença **MIT**. Veja o arquivo `LICENSE` para
 
 ---
 
-*Desenvolvido por [Seu Nome/GitHub Username]*_
-
-## 📄 Licença
-
-O projeto está licenciado sob a licença **MIT**. Veja o arquivo `LICENSE` para mais detalhes.
-
----
-
-_Desenvolvido por [Seu Nome/GitHub Username]_\_
+*Desenvolvido por brunoPP29*_
