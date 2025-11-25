@@ -3,11 +3,6 @@
 namespace App\Services;
 
 use App\Models\EnterpriseProduct;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
-use PHPUnit\Metadata\ExcludeGlobalVariableFromBackup;
 
 class EnterpriseProductService{
 
@@ -23,25 +18,31 @@ public function checkLogin()
     }
 }
 
-    public function register($req){
-            // validação mínima
+        public function register($req)
+        {
+            // nome seguro da tabela dinâmica
+            $tableName = preg_replace('/[^a-zA-Z0-9]/', '_', session('tableOrigin')) . '_products';
 
-        // nome seguro da tabela dinâmica
-        $tableName = preg_replace('/[^a-zA-Z0-9]/', '_', session('tableOrigin')) . '_products';
+            // criar o objeto do modelo
+            $product = new EnterpriseProduct;
 
-        // inserir produto
-        DB::table($tableName)->insert([
-            'name' => $req->name,
-            'price_per_hour' => $req->price_per_hour ?? 0,
-            'duration_minutes' => $req->duration_minutes ?? 60,
-            'opens_at' => $req->opens_at,
-            'closes_at' => $req->closes_at,
-            'description' => $req->description ?? '',
-        ]);
+            // define a tabela dinamicamente
+            $product->setTable($tableName);
 
-        return 'ok';
+            // preenche os dados
+            $product->name = $req->name;
+            $product->price_per_hour = $req->price_per_hour ?? 0;
+            $product->duration_minutes = $req->duration_minutes ?? 60;
+            $product->opens_at = $req->opens_at;
+            $product->closes_at = $req->closes_at;
+            $product->description = $req->description ?? '';
 
-    }
+            // salva usando Eloquent
+            $product->save();
+
+            return $product;
+        }
+
 
 }
 
