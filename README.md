@@ -217,17 +217,14 @@ Contribuições são bem-vindas! Se você deseja contribuir, siga os passos:
 ## 🗺️ Roadmap (O que falta no projeto)
 
 Esta seção lista as principais áreas que precisam de desenvolvimento ou melhoria para tornar o projeto completo e robusto.
+| Funcionalidade/Melhoria | Implementado | Observações |
+| :--- | :---: | :--- |
+| **Documentação Completa**| Detalhar a API, o fluxo de dados e as regras de negócio. |
+| **Painel de Gerenciamento (Empresa)**| Interface para empresas visualizarem e gerenciarem suas reservas. |
+| **Painel de Gerenciamento (Cliente)**| Interface para clientes visualizarem, alterarem e cancelarem suas reservas. |
+| **Confirmação de Reserva (Email/Notificação)**| Implementar sistema de notificação para clientes e empresas. |
+| **Refatoração de Controllers**| Continuar a refatoração dos Controllers restantes (ex: `EnterpriseProductController`) para o padrão Controller Magro/Service. |
 
-| Prioridade | Funcionalidade/Melhoria | Implementado | Observações |
-| :---: | :--- | :---: | :--- |
-| **Alta** | **Testes Automatizados** | ❌ Não | Implementar testes unitários para Services e testes de feature para Controllers. |
-| **Alta** | **Documentação Completa** | ❌ Não | Detalhar a API, o fluxo de dados e as regras de negócio. |
-| **Média** | **Painel de Gerenciamento (Empresa)** | ❌ Não | Interface para empresas visualizarem e gerenciarem suas reservas. |
-| **Média** | **Painel de Gerenciamento (Cliente)** | ❌ Não | Interface para clientes visualizarem, alterarem e cancelarem suas reservas. |
-| **Média** | **Confirmação de Reserva (Email/Notificação)** | ❌ Não | Implementar sistema de notificação para clientes e empresas. |
-| **Baixa** | **Refatoração de Controllers** | ❌ Não | Continuar a refatoração dos Controllers restantes (ex: `EnterpriseProductController`) para o padrão Controller Magro/Service. |
-| **Baixa** | **[Seu Item Aqui]** | ❌ Não | **Preencha aqui com o que você planeja fazer em seguida!** |
-| **Baixa** | **[Seu Item Aqui]** | ❌ Não | **Preencha aqui com o que você planeja fazer em seguida!** |
 
 ## 📄 Licença
 
