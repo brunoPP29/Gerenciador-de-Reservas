@@ -1,59 +1,129 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+\_# 📅 Gerenciador de Reservas
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <a href="https://laravel.com" target="_blank">
+    <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="200" alt="Laravel Logo">
+  </a>
 </p>
 
-## About Laravel
+<p align="center">
+  <img src="https://img.shields.io/badge/Laravel-v10.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel Version">
+  <img src="https://img.shields.io/badge/PHP-v8.1+-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP Version">
+  <img src="https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow?style=for-the-badge" alt="Status do Projeto">
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📝 Descrição do Projeto
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+O **Gerenciador de Reservas** é uma aplicação web desenvolvida em Laravel, projetada para facilitar a gestão de reservas de produtos ou serviços. O sistema oferece uma plataforma dupla, permitindo o registro e login de **usuários comuns** (clientes) e **usuários empresariais** (fornecedores), que podem cadastrar seus produtos/serviços e gerenciar suas respectivas lojas e reservas.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**Principais Módulos Identificados:**
 
-## Learning Laravel
+-   **Autenticação:** Login e Registro para Clientes e Empresas.
+-   **Gestão de Empresas:** Cadastro de empresas e produtos/serviços.
+-   **Vitrine/Loja:** Visualização de produtos/serviços por empresa.
+-   **Reservas:** Funcionalidade principal para clientes realizarem reservas.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 🛠️ Tecnologias Utilizadas
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+O projeto é construído sobre uma pilha de tecnologias robusta e moderna:
 
-## Laravel Sponsors
+-   **Backend:** PHP 8.1+
+-   **Framework:** Laravel 10.x
+-   **Banco de Dados:** (A ser definido, mas tipicamente MySQL, PostgreSQL ou SQLite)
+-   **Gerenciador de Dependências:** Composer
+-   **Frontend:** Tailwind
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## ✨ Funcionalidades Atuais
 
-### Premium Partners
+As seguintes funcionalidades foram implementadas e estão em fase de desenvolvimento:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+-   **Login e Registro de Usuário:** Sistema de autenticação seguro (com hashing de senha).
+-   **Login e Registro de Empresa:** Sistema de autenticação e cadastro dedicado para fornecedores.
+-   **Cadastro de Produtos/Serviços:** Empresas podem registrar itens disponíveis para reserva.
+-   **Visualização de Loja:** Clientes podem navegar pela vitrine de produtos de uma empresa específica.
+-   **Realização de Reservas:** Clientes podem reservar produtos/serviços.
+-   **Estrutura de Serviços (Services):** Refatoração inicial da lógica de negócio para a camada de Services (`LoginService`, `RegisterService`, etc.), promovendo um código mais limpo e manutenível.
 
-## Contributing
+## 🚀 Instalação e Configuração
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Siga os passos abaixo para configurar o ambiente de desenvolvimento:
 
-## Code of Conduct
+### Pré-requisitos
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+-   PHP >= 8.1
+-   Composer
+-   Um servidor web (Apache ou Nginx) ou Laravel Sail/Herd
+-   Banco de dados (MySQL, PostgreSQL, etc.)
 
-## Security Vulnerabilities
+### Passos de Instalação
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1.  **Clone o repositório:**
 
-## License
+    ```bash
+    git clone https://github.com/brunoPP29/Gerenciador-de-Reservas.git
+    cd Gerenciador-de-Reservas
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+2.  **Instale as dependências do Composer:**
+
+    ```bash
+    composer install
+    ```
+
+3.  **Crie o arquivo de ambiente:**
+
+    ```bash
+    cp .env.example .env
+    ```
+
+4.  **Gere a chave da aplicação:**
+
+    ```bash
+    php artisan key:generate
+    ```
+
+5.  **Configure o Banco de Dados:**
+    Edite o arquivo `.env` com as credenciais do seu banco de dados.
+
+6.  **Execute as Migrações:**
+
+    ```bash
+    php artisan migrate
+    ```
+
+7.  **Inicie o Servidor de Desenvolvimento:**
+    ```bash
+    php artisan serve
+    ```
+    A aplicação estará acessível em `http://127.0.0.1:8000`.
+
+## 🤝 Como Contribuir
+
+Contribuições são bem-vindas! Se você deseja contribuir, siga os passos:
+
+1.  Faça um _fork_ do projeto.
+2.  Crie uma _branch_ para sua funcionalidade (`git checkout -b feature/minha-feature`).
+3.  Faça o _commit_ das suas alterações (`git commit -m 'feat: Adiciona nova funcionalidade X'`).
+4.  Faça o _push_ para a _branch_ (`git push origin feature/minha-feature`).
+5.  Abra um _Pull Request_.
+
+## 🗺️ Roadmap (O que falta no projeto)
+
+Esta seção lista as principais áreas que precisam de desenvolvimento ou melhoria para tornar o projeto completo e robusto.
+
+Funcionalidade/Melhoria | Status | Observações |
+:--------------------------------------------- | :---------: | :---------------------------------------------------------------------------------------------------------------------------- | |
+**Documentação Completa** | ⬜ Pendente | Detalhar a API, o fluxo de dados e as regras de negócio. |
+**Painel de Gerenciamento (Empresa)** | ⬜ Pendente | Interface para empresas visualizarem e gerenciarem suas reservas. |
+**Confirmação de Reserva (Email/Notificação)** | ⬜ Pendente | Implementar sistema de notificação para clientes e empresas. |
+**Refatoração de Controllers** | ⬜ Pendente | Continuar a refatoração dos Controllers restantes (ex: `EnterpriseProductController`) para o padrão Controller Magro/Service. |
+**[Seu Item Aqui]** | ⬜ Pendente | **Preencha aqui com o que você planeja fazer em seguida!** |
+**[Seu Item Aqui]** | ⬜ Pendente | **Preencha aqui com o que você planeja fazer em seguida!** |
+
+## 📄 Licença
+
+O projeto está licenciado sob a licença **MIT**. Veja o arquivo `LICENSE` para mais detalhes.
+
+---
+
+_Desenvolvido por [Seu Nome/GitHub Username]_\_
