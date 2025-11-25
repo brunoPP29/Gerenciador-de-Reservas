@@ -217,7 +217,7 @@ Contribuições são bem-vindas! Se você deseja contribuir, siga os passos:
 ## 🗺️ Roadmap (O que falta no projeto)
 
 Esta seção lista as principais áreas que precisam de desenvolvimento ou melhoria para tornar o projeto completo e robusto.
-| Funcionalidade/Melhoria | Implementado |
+| Funcionalidade/Melhoria | Implementado | |
 | :--- | :---: | :--- |
 | **Documentação Completa**| Detalhar a API, o fluxo de dados e as regras de negócio. |
 | **Painel de Gerenciamento (Empresa)**| Interface para empresas visualizarem e gerenciarem suas reservas. |
