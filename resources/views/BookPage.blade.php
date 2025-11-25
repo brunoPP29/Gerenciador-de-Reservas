@@ -24,11 +24,9 @@
             @if(session('success'))
                 <div class="bg-emerald-900/50 border border-emerald-700 text-emerald-300 p-4 rounded-lg text-base font-medium space-y-3">
                     <p>{{ session('success') }}</p>
-                    <a href="." class="inline-block px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-lg transition duration-300 ease-in-out">
-                        Login
-                    </a>
                 </div>
             @endif
+            
 
             <form method="POST" class="space-y-4">
                 @csrf
@@ -55,6 +53,9 @@
                     @endif
                     @if(isset($productInfo->closes_at))
                         <p class="text-sm text-gray-300"><strong>Closes at:</strong> {{ $productInfo->closes_at }}</p>
+                    @endif
+                    @if(isset($productInfo->price))
+                        <p class="text-sm text-gray-300"><strong>Minimum duration:</strong> R$ {{ $productInfo->duration_minutes }}</p>
                     @endif
                 </div>
 

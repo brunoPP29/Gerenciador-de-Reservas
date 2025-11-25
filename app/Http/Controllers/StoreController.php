@@ -28,8 +28,10 @@ class StoreController extends Controller
         if ($databaseOrigin) {
             //se tiver parametros
             if ($name != null) {
-                $tbReservation = $empresa.'_reservations';
-                $tbProducts = $empresa.'_products';
+                session()->put('tbReservation', $empresa.'_reservations');
+                $tbReservation = session('tbReservation');
+                session()->put('tbProducts', $empresa.'_products');
+                $tbProducts = session('tbProducts');
                 $productInfo = $this->service->getProduct($name, $tbProducts);
                 return view('BookPage', compact('tbReservation', 'tbProducts', 'name', 'productInfo'));
             }else{
@@ -57,10 +59,8 @@ class StoreController extends Controller
     $data = $request->except(['where_to', '_token', 'Products', 'product']);
     // tentar salvar
     $saved = $this->service->saveReservation($table, $data);
-    if (!$saved) {
-        return back()->with('error', 'Esse horário já está reservado!');
-    }
-    return back()->with('success', 'Reserva salva com sucesso!');
+
+    return $saved;
 }
 
 

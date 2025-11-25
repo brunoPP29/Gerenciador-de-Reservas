@@ -1,13 +1,10 @@
 <?php
 
 namespace App\Services;
-use App\Models\Store;
-use App\Models\EnterpriseProduct;
 use App\Models\EnterpriseLogin;
-use App\Models\DynamicTable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class StoreService{
 
@@ -56,28 +53,46 @@ class StoreService{
 
     }
 
-    public function hasConflict($table, $date, $start, $end)
+    public function hasConflict($table, $date, $start, $end, $id)
         {
-            return DB::table($table)
+            
+            $product = DB::table(session('tbProducts'))->where('id', $id)->first();
+            $minutos = Carbon::parse($start)->diffInMinutes($end);
+            if ($minutos >= $product->duration_minutes) {
+                
+            }else{
+                return back()->with('error', 'Reservations can only be made in '.$product->duration_minutes.'-minute blocks.');
+            }
+
+            $checkConflict =  DB::table($table)
                 ->where('date', $date)
                 ->where(function($q) use ($start, $end) {
                     $q->where('start_time', '<', $end)
                     ->where('end_time', '>', $start);
                 })
                 ->exists();
+
+                if ($checkConflict) {
+                   return back()->with('error', 'This time slot is already booked.');
+
+                }else{
+
+                }
         }
 
     public function saveReservation($table, $data){
-            // checar conflito
-            if ($this->hasConflict($table, $data['date'], $data['start_time'], $data['end_time'])) {
-                return false; // conflito detectado
-            }
-
+            $conflict = $this->hasConflict($table, $data['date'], $data['start_time'], $data['end_time'], $data['product_id']);
+            if($conflict) {
+                return $conflict;
+            }else{
             // garante timestamps
             $data['created_at'] = now();
             $data['updated_at'] = now();
 
             return DB::table($table)->insert($data);
+            }
+
+
         }
 
 
