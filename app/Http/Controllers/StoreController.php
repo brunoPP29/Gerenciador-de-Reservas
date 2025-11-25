@@ -1,13 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Services\StoreService;
 use Illuminate\Http\Request;
-use App\Reservas;
-use Illuminate\Support\Facades\DB;
-use App\Models\Store;
 
 
 class StoreController extends Controller
@@ -22,24 +18,9 @@ class StoreController extends Controller
     public function index($empresa, $name = null)
     {
 
-        $databaseOrigin = $this->service->checkEnterprise($empresa);
-        $dadosEmpresa = $this->service->getEnterprise($empresa);
-        $customerName = session('userName');
-        if ($databaseOrigin) {
-            //se tiver parametros
-            if ($name != null) {
-                session()->put('tbReservation', $empresa.'_reservations');
-                $tbReservation = session('tbReservation');
-                session()->put('tbProducts', $empresa.'_products');
-                $tbProducts = session('tbProducts');
-                $productInfo = $this->service->getProduct($name, $tbProducts);
-                return view('BookPage', compact('tbReservation', 'tbProducts', 'name', 'productInfo'));
-            }else{
-                return view('ProductsPage', compact('databaseOrigin', 'dadosEmpresa', 'empresa'));
-            }
-            }else{
-                return view('404Page');
-         }    
+        $databaseOrigin = $this->service->checkEnterprise($empresa, $name);
+
+        return $databaseOrigin;
          
          
     }
@@ -47,12 +28,9 @@ class StoreController extends Controller
 
     public function reserve(Request $request){
     // checar login
-    $checkLogin = $this->service->checkLogin();
-    if ($checkLogin === false) {
-        return redirect('/');
-    }
+    $check = $this->service->checkLogin();
+        if ($check) {}else{return $check;}
 
-    
     // nome da tabela onde salvar (ex: admin_admin_com_reservations)
     $table = $request->input('where_to');
     // pega os dados sem lixo do form

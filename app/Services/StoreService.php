@@ -16,18 +16,31 @@ class StoreService{
             return true;
         }else{
             session()->put('urlAfter', $url);
-            return false;
+            return redirect('/');
 
         }
     }
 
-    public function checkEnterprise($empresa){
+    public function checkEnterprise($empresa, $name){
         $tbprodutos = $empresa.'_products';;
         if (Schema::hasTable($tbprodutos)) {
             $produtos = DB::table($tbprodutos)->get();
-            return $produtos;
+                        //se tiver parametros
+                        
+                        if ($name != null) {
+                        $customerName = session('userName');
+                        session()->put('tbReservation', $empresa.'_reservations');
+                        $tbReservation = session('tbReservation');
+                        session()->put('tbProducts', $empresa.'_products');
+                        $tbProducts = session('tbProducts');
+                        $productInfo = $this->getProduct($name, $tbProducts);
+                        return view('BookPage', compact('tbReservation', 'tbProducts', 'name', 'productInfo'));
+                    }else{
+                        $dadosEmpresa = $this->getEnterprise($empresa);
+                        return view('ProductsPage', compact('produtos', 'dadosEmpresa', 'empresa'));
+                    }
         } else {
-            $empresa = collect(); // retorna coleção vazia
+            return view('404Page');
         }
     }
 

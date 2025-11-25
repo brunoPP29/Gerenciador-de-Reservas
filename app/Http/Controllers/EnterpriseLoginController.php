@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\EnterpriseLoginService;
-use App\Reservas;
 
 
 class EnterpriseLoginController extends Controller{
@@ -22,13 +21,8 @@ class EnterpriseLoginController extends Controller{
     }
 
     public function login(Request $req){
-        $login = $this->service->login($req);
-        if ($login === true) {
-           return view('EnterprisePage');
-        }else{
-            return redirect()->back()->withInput()->with('error', 'Usuário ou senha incorretos!');
-            
-        }
+        return $this->service->login($req);
+
     }
 
 

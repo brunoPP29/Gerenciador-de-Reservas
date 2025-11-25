@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\RegisterService;
-use App\Reservas;
-use App\Models\Register;
 
 class RegisterController extends Controller{
 
@@ -22,9 +20,8 @@ class RegisterController extends Controller{
 
     public function register(Request $req){
         $validationFields = $this->service->checkFields($req);
-        $insert = $this->service->register($req);
-        session()->put('logado', true);
-        return redirect()->back()->with('success', 'User registered successfully!');
+        return $this->service->register($req);
+
         
 
     }

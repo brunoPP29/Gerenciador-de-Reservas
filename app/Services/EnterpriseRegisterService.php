@@ -44,6 +44,7 @@ class EnterpriseRegisterService{
 
         // cria tabelas personalizadas da empresa
         session()->put('tableOrigin', $req->email);
+        session()->put('logadoenterprise', true);
         $this->databaseCheck($req->email);
     }
 

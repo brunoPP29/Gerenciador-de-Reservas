@@ -29,11 +29,11 @@ public function login($req)
     if ($infos && Hash::check($req->password, $infos->password)) {
         session()->put('tableOrigin', $infos->email);
         session()->put('logadoenterprise', true);
-        return true;
+        return view('EnterprisePage');
     }
 
-    return false;
-}
+    return redirect()->back()->withInput()->with('error', 'Usuário ou senha incorretos!');
+    }
 
     }
 

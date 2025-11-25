@@ -15,13 +15,13 @@
             <div></div> {{-- Spacer --}}
         </div>
 
-        @if($databaseOrigin->isEmpty())
+        @if($produtos->isEmpty())
             <div class="bg-gray-800 rounded-xl shadow-2xl p-8 text-center border border-gray-700">
                 <p class="text-xl text-gray-300">No products found for this enterprise.</p>
             </div>
         @else
             <div class="space-y-6">
-                @foreach($databaseOrigin as $produto)
+                @foreach($produtos as $produto)
                     <div class="bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-700 flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0 transition duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-sky-500/30">
                         <div class="space-y-1">
                             <h2 class="text-xl font-bold text-white">{{ $produto->name }}</h2>
