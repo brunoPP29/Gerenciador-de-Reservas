@@ -5,6 +5,8 @@ use App\Models\EnterpriseLogin;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
+
 
 class StoreService{
 
@@ -98,11 +100,17 @@ class StoreService{
             if($conflict) {
                 return $conflict;
             }else{
+
+            $data = Arr::except($data, ['duration_minutes']);
             // garante timestamps
             $data['created_at'] = now();
             $data['updated_at'] = now();
 
-            return DB::table($table)->insert($data);
+            if(DB::table($table)->insert($data)){
+                return back()->with('success', 'A reserva foi concluída com sucesso');
+            }else{
+                return back()->with('error', 'Aconteceu um erro! Caso persista entre em contato');
+            }
             }
 
 

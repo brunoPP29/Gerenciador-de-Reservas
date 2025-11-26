@@ -37,7 +37,6 @@ class StoreController extends Controller
     $data = $request->except(['where_to', '_token', 'Products', 'product']);
     // tentar salvar
     $saved = $this->service->saveReservation($table, $data);
-
     return $saved;
 }
 
