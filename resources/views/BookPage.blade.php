@@ -105,7 +105,7 @@
             <input type="hidden" name="product_id" value="{{ $productInfo->id ?? '' }}">
             <input type="hidden" name="product" value="{{ $productInfo->name ?? '' }}">
             <input type="hidden" name="status" value="confirmed">
-            <input type="hidden" value="" name="client_name" id="client_name">
+            <input type="hidden" value="{{ $clientName }}" name="client_name" id="client_name">
             
             {{-- CORRIGIDO: Usando 'price_per_hour' --}}
             <input type="hidden" value="{{ $productInfo->price_per_hour ?? 0 }}" id="product_price_per_hour">

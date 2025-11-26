@@ -30,13 +30,13 @@ class StoreService{
                         //se tiver parametros
                         
                         if ($name != null) {
-                        $customerName = session('userName');
+                        $clientName = session('userName');
                         session()->put('tbReservation', $empresa.'_reservations');
                         $tbReservation = session('tbReservation');
                         session()->put('tbProducts', $empresa.'_products');
                         $tbProducts = session('tbProducts');
                         $productInfo = $this->getProduct($name, $tbProducts);
-                        return view('BookPage', compact('tbReservation', 'tbProducts', 'name', 'productInfo'));
+                        return view('BookPage', compact('tbReservation', 'tbProducts', 'name', 'productInfo', 'clientName'));
                     }else{
                         $dadosEmpresa = $this->getEnterprise($empresa);
                         return view('ProductsPage', compact('produtos', 'dadosEmpresa', 'empresa'));
@@ -74,7 +74,14 @@ class StoreService{
             $product = DB::table(session('tbProducts'))->where('id', $id)->first();
             $minutos = Carbon::parse($start)->diffInMinutes($end);
             if ($minutos >= $product->duration_minutes) {
-                
+                $date = Carbon::parse($date);
+                $hoje = Carbon::today();
+                if ($date->lt($hoje)) {
+                    return back()->with('error', 'Select a future day');
+
+                } else {
+                //continua
+                }
             }else{
                 return back()->with('error', 'Reservations can only be made in '.$product->duration_minutes.'-minute blocks.');
             }

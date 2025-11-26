@@ -5,6 +5,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\EnterpriseLoginController;
 use App\Http\Controllers\EnterpriseRegisterController;
 use App\Http\Controllers\EnterpriseProductController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\StoreController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,4 +23,6 @@ Route::post('/enterprise/registerProduct', [EnterpriseProductController::class, 
 Route::get('/loja/{empresa}', [StoreController::class, 'index']);
 Route::get('/loja/{empresa}/{name}', [StoreController::class, 'index']);
 Route::post('/loja/{empresa}/{name}', [StoreController::class, 'reserve']);
+Route::get('client/my_appointments', [ReservationController::class, 'index']);
+Route::get('/client/delete/{id}/{table}', [ReservationController::class, 'deleteItem']);
 
