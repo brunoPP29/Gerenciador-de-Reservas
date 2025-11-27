@@ -37,12 +37,14 @@ class LoginService
         if ($user && Hash::check($passInput, $user->password)) {
             if (session('urlAfter') == true) {
                 session()->put('logado', true);
-                session()->put('userName', $req->input('user'));
+                session()->put('userName', $userInput);
                 return redirect((string) session('urlAfter'));
             }else{
             session()->put('logado', true);
-            session()->put('userName', $req->input('user'));
-            return view('HomePage');
+            session()->put('userName', $userInput);
+            $userName = session('userName');
+            $statusReservations = $this->getStatus();
+            return view('HomePage', compact('userName', 'statusReservations'));
             }
         }
 

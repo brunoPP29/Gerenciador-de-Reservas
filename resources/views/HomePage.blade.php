@@ -39,7 +39,7 @@
 
             <div class="flex items-center space-x-4">
                 <p class="text-lg font-medium text-gray-300 bg-gray-700/50 px-4 py-2 rounded-full hidden sm:block">
-                    Olá, [Nome do Cliente]!
+                    Olá, <strong><i>{{ $userName }}</i></strong>!
                 </p>
                 
                 <!-- Botão de Logout -->
