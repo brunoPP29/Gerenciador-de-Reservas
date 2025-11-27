@@ -156,7 +156,7 @@
                 {{-- Telefone do Cliente (COM MÁSCARA JS) --}}
                 <div>
                     <label for="client_phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Telefone (DDD + Número):</label>
-                    <input type="text" name="client_phone" id="client_phone" placeholder="(99) 99999-9999" maxlength="15"
+                    <input required type="text" name="client_phone" id="client_phone" placeholder="(99) 99999-9999" maxlength="15"
                            class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-4 focus:ring-sky-500/50 focus:border-sky-500 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 transition duration-300 ease-in-out shadow-sm">
                 </div>
             </div>

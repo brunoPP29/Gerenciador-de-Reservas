@@ -26,9 +26,12 @@ public function login($req)
 
     $infos = EnterpriseLogin::where('email', $req->email)->first();
 
+    
     if ($infos && Hash::check($req->password, $infos->password)) {
+        $enterpriseName = EnterpriseLogin::where('email', $req->email)->value('name');
         session()->put('tableOrigin', $infos->email);
         session()->put('logadoenterprise', true);
+        session()->put('userEnterprise', $enterpriseName);
         return view('EnterprisePage');
     }
 

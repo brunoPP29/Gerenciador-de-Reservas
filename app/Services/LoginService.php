@@ -42,9 +42,8 @@ class LoginService
             }else{
             session()->put('logado', true);
             session()->put('userName', $userInput);
-            $userName = session('userName');
             $statusReservations = $this->getStatus();
-            return view('HomePage', compact('userName', 'statusReservations'));
+            return view('HomePage', compact('statusReservations'));
             }
         }
 

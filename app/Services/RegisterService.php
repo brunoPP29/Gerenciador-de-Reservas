@@ -35,6 +35,7 @@ class RegisterService{
         'password' => Hash::make($req->password), // nunca armazene senha sem hash
     ]);
         session()->put('logado', true);
+        session()->put('userName', $req->user);
         return redirect()->back()->with('success', 'User registered successfully!');
     }
 
