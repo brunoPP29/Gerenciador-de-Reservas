@@ -2,6 +2,7 @@
 namespace App\Services;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Login;
+use Illuminate\Support\Facades\DB;
 
 
 class LoginService
@@ -55,5 +56,41 @@ class LoginService
         session()->put('logadoenterprise', false);
         session()->put('userName', false);
         return redirect('/');
+    }
+
+    public function getStatus(){
+        $userName = session('userName');
+        $totalR = 0;
+        $totalC = 0;
+        $totalF = 0;
+
+        $tables = DB::select("SHOW TABLES LIKE '%_reservations'");
+
+        foreach ($tables as $tableObj) {
+            // Pega o nome da tabela (a chave muda conforme o banco)
+            $table = array_values((array) $tableObj)[0];
+
+            $countR = DB::table($table)
+                ->where('client_name', $userName)
+                ->count();
+
+            $totalR += $countR;
+
+            $countC = DB::table($table)
+                ->where('client_name', $userName)
+                ->where('status', 'confirmed')
+                ->count();
+
+            $totalC += $countC;
+
+            $countF= DB::table($table)
+                ->where('client_name', $userName)
+                ->where('status', 'canceled')
+                ->count();
+
+            $totalF += $countF;
+
+        }
+        return [$totalR, $totalC, $totalF];
     }
 }

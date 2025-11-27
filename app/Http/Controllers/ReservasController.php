@@ -18,7 +18,8 @@ class ReservasController extends Controller
     public function index()
     {
         $redirect = $this->service->checkLogin();
-        return view($redirect); // renderiza a view correta
+        $statusReservations = $this->service->getStatus();
+        return view($redirect, compact('statusReservations')); // renderiza a view correta
     }
 
     public function login(Request $req)

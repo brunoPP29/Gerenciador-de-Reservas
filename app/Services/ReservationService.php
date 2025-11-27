@@ -70,7 +70,7 @@ public function getReservations(){
             ->from($table) // define tabela dinamicamente
             ->where('id', $id)
             ->update([
-                'status' => 'cancelado'
+                'status' => 'canceled'
             ]);
             return redirect('client/my_appointments');
             }

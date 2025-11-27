@@ -81,14 +81,22 @@
         <!-- SEÇÃO DE INFORMAÇÕES DE STATUS (OPCIONAL/VISUAL) -->
         <section class="pt-6">
             <h2 class="text-2xl font-bold text-gray-300 mb-4 border-b border-gray-700/50 pb-2">Status Rápido</h2>
-            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 space-y-4">
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 space-y-4 mb-4">
                 <p class="text-lg text-gray-300 flex justify-between items-center">
-                    <span class="font-semibold">Agendamentos Pendentes:</span>
-                    <span class="text-yellow-400 font-bold">1</span>
+                    <span class="font-semibold">Reservas confirmadas:</span>
+                    <span class="text-green-400 font-bold">{{ $statusReservations[0] }}</span>
                 </p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 space-y-4 mb-4">
                 <p class="text-lg text-gray-300 flex justify-between items-center">
-                    <span class="font-semibold">Serviços Completados:</span>
-                    <span class="text-green-400 font-bold">5</span>
+                    <span class="font-semibold">Reservas confirmadas:</span>
+                    <span class="text-green-400 font-bold">{{ $statusReservations[1] }}</span>
+                </p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 space-y-4 mb-4">
+                <p class="text-lg text-gray-300 flex justify-between items-center">
+                    <span class="font-semibold">Reservas Canceladas:</span>
+                    <span class="text-green-400 font-bold">{{ $statusReservations[2] }}</span>
                 </p>
             </div>
         </section>
