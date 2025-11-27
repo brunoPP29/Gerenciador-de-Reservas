@@ -70,7 +70,6 @@ class StoreService{
 
     public function hasConflict($table, $date, $start, $end, $id)
         {
-            
             $product = DB::table(session('tbProducts'))->where('id', $id)->first();
             $minutos = Carbon::parse($start)->diffInMinutes($end);
             if ($minutos >= $product->duration_minutes) {
@@ -86,19 +85,20 @@ class StoreService{
                 return back()->with('error', 'Reservations can only be made in '.$product->duration_minutes.'-minute blocks.');
             }
 
-            $checkConflict =  DB::table($table)
-                ->where('date', $date)
-                ->where(function($q) use ($start, $end) {
-                    $q->where('start_time', '<', $end)
-                    ->where('end_time', '>', $start);
-                })
-                ->exists();
+                $conflict = DB::table($table)
+                    ->where('date', $date)
+                    ->where(function($q) use ($start, $end) {
+                        $q->where('start_time', '<', $end)
+                        ->where('end_time', '>', $start);
+                    })
+                    ->first();
 
-                if ($checkConflict) {
-                   return back()->with('error', 'This time slot is already booked.');
-
-                }else{
-
+                if (!$conflict) {
+                    // não existe conflito — segue o fluxo
+                } else {
+                    if ($conflict->status === 'confirmed') {
+                        return back()->with('error', 'This time slot is already booked.');
+                    }
                 }
         }
 

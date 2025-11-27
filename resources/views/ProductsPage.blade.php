@@ -38,7 +38,7 @@
                 </svg>
                 Voltar
             </button>
-            <h1 class="text-4xl font-extrabold text-center text-sky-400 tracking-tight flex-grow">
+            <h1 class="text-4xl font-extrabold text-center text-sky-400 tracking-tight grow">
                 Produtos de {{ $dadosEmpresa->name ?? 'Empresa' }}
             </h1>
             <div></div> {{-- Spacer --}}
@@ -62,7 +62,7 @@
                         </div>
                         
                         <a href="/reservas/public/loja/{{ $empresa }}/{{ $produto->name }}"
-                           class="inline-flex items-center justify-center px-6 py-3 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-lg shadow-lg shadow-sky-500/30 transition duration-300 ease-in-out transform hover:scale-[1.03] flex-shrink-0 text-base">
+                           class="inline-flex items-center justify-center px-6 py-3 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-lg shadow-lg shadow-sky-500/30 transition duration-300 ease-in-out transform hover:scale-[1.03] shrink-0 text-base">
                             Agendar Agora
                         </a>
                     </div>

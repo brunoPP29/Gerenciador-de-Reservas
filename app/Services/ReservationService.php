@@ -69,7 +69,9 @@ public function getReservations(){
         \App\Models\Store::query()
             ->from($table) // define tabela dinamicamente
             ->where('id', $id)
-            ->delete();
+            ->update([
+                'status' => 'cancelado'
+            ]);
             return redirect('client/my_appointments');
             }
 

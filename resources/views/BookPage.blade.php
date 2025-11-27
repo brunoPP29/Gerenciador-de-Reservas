@@ -76,7 +76,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
             </button>
-            <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight text-center flex-grow">
+            <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight text-center grow">
                 Reservar: <span class="text-sky-600 dark:text-sky-400">{{ $productInfo->name }}</span>
             </h1>
             <!-- Botão placeholder (para alinhamento) -->

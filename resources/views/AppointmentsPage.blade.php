@@ -40,7 +40,7 @@
                 </svg>
                 Voltar
             </button>
-            <h1 class="text-4xl font-extrabold text-center text-sky-400 tracking-tight flex-grow">
+            <h1 class="text-4xl font-extrabold text-center text-sky-400 tracking-tight grow">
                 Agenda de Reservas
             </h1>
             <div></div> {{-- Spacer --}}
@@ -68,11 +68,6 @@
                         $dateFormatted = date('d/m/Y', strtotime($reservation->date));
                         
                         // Determinar a classe do botão de cancelamento (usando $reservation->status)
-                        $isCancelled = $reservation->status === 'Cancelado';
-                        $cancelClass = $isCancelled 
-                            ? 'bg-gray-600 text-gray-400 cursor-not-allowed' 
-                            : 'bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-500/30 transform hover:scale-[1.03]';
-                        
                         // O ID da reserva deve ser o ID real no banco de dados. Estou assumindo que ele é $reservation->id.
                         // Se a sua variável não for 'id', ajuste aqui:
                         $reservationId = $reservation->id ?? $reservation->date . '_' . $reservation->start_time; // Fallback se 'id' não existir
@@ -110,28 +105,29 @@
                             </div>
                             
                             <!-- Status Label (usando $reservation->status) -->
-                            <span id="status-label-{{ $reservationId }}" class="inline-block mt-2 px-3 py-1 text-xs font-bold uppercase rounded-full {{ 'status-' . str_replace(' ', '', $reservation->status) }}">
+                            <span id="status-label-{{ $reservationId }}" class="inline-block mt-2 px-3 py-1 text-xl font-bold uppercase rounded-full {{ 'status-' . str_replace(' ', '', $reservation->status) }}">
                                 {{ $reservation->status }}
                             </span>
                         </div>
 
                         <!-- Coluna 3: Ações -->
+                        @if ($reservation->status === 'confirmed')
+                            
                         <div class="md:w-1/3 flex justify-end">
                             <a
                             href="delete/{{ $reservation->id }}/{{ $reservation->source_table }}"
-                                class="cancel-button inline-flex items-center justify-center px-6 py-2 font-semibold rounded-lg transition duration-300 ease-in-out {{ $cancelClass }}"
-                                {{ $isCancelled ? 'disabled' : '' }}
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                {{ $isCancelled ? 'Cancelada' : 'Cancelar Reserva' }}
-                            </a>
-                        </div>
+                            class="cancel-button inline-flex items-center justify-center px-6 py-2 font-semibold rounded-lg transition duration-300 ease-in-out {{ $cancelClass }}"
+                            >   Cancelar reserva
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </a>
                     </div>
+                    @endif
+                </div>
                 @endforeach
-            @endif
-        </div>
+                @endif
+            </div>
         
     </div>
     
