@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Services\StoreService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class StoreController extends Controller
@@ -39,6 +40,43 @@ class StoreController extends Controller
     $saved = $this->service->saveReservation($table, $data);
     return $saved;
 }
+
+public function checkHours(Request $req)
+    {
+
+
+        if(isset($req->hora)){
+            if (!session('userName')) {
+                $plainUrl = request()->url();
+                $baseUrl = dirname($plainUrl);
+                session()->put('urlAfter', $baseUrl);
+                return redirect('/');
+            }
+            $reserva = $this->service->createCalendarReserva($req);
+            return $reserva;
+        }
+
+        $data = $req->date;
+        $tbReservations = $req->where_to; // tabela de reservas
+        $tbProducts = $req->Products;     // tabela de produtos
+
+        // Pega informações do produto (duração, abertura/fechamento)
+        $infosProduct = $this->service->getHours($req, $tbProducts);
+        if (!$infosProduct) {
+            return response()->json(['error' => 'Produto não encontrado'], 404);
+        }
+
+        // Gera todos os horários possíveis
+        $horarios = $this->service->getAvailableTimes($infosProduct);
+
+        // Pega reservas existentes
+        $reservasHorarios = $this->service->getReservationsTime($req->product_id, $tbReservations, $data);
+
+        // Filtra horários já ocupados
+        $horariosDisponiveis = $this->service->filterTimes($horarios, $reservasHorarios);
+        // Retorna horários disponíveis
+        return view('horariosBookPage', compact('req', 'horariosDisponiveis'));
+    }
 
 
 }

@@ -3,7 +3,7 @@ Editar dados pessoais
     =alterar todos as reservas que contem esse clientname
     =mudar a senha via email
 
-    XX LOOP EM ITENS DE REGISTER PRODUCT TYPE
+    XX TRATAR ERROS DE GET EM POST
 
  -novos tipos de reservas(escolher quando criar o produto)
     =por calendario(diariamente vai ter 6 horario por exemplo de tal a tal hora)

@@ -25,4 +25,6 @@ Route::get('/loja/{empresa}/{name}', [StoreController::class, 'index']);
 Route::post('/loja/{empresa}/{name}', [StoreController::class, 'reserve']);
 Route::get('client/my_appointments', [ReservationController::class, 'index']);
 Route::get('/client/delete/{id}/{table}', [ReservationController::class, 'deleteItem']);
+Route::post('/loja/{empresa}/{name}/bookcalendar', [StoreController::class, 'checkHours'])
+    ->name('bookcalendar');
 

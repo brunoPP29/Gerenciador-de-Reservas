@@ -36,7 +36,12 @@ class StoreService{
                         session()->put('tbProducts', $empresa.'_products');
                         $tbProducts = session('tbProducts');
                         $productInfo = $this->getProduct($name, $tbProducts);
-                        return view('BookPage', compact('tbReservation', 'tbProducts', 'name', 'productInfo', 'clientName'));
+
+                        if ($productInfo->type === 'calendar') {
+                            return view('BookCalendarPage', compact('tbReservation', 'tbProducts', 'name', 'productInfo', 'empresa'));
+                        }
+
+                        return view('BookPage', compact('tbReservation', 'tbProducts', 'name', 'productInfo'));
                     }else{
                         $dadosEmpresa = $this->getEnterprise($empresa);
                         return view('ProductsPage', compact('produtos', 'dadosEmpresa', 'empresa'));
@@ -124,7 +129,123 @@ class StoreService{
         }
 
 
+    public function getHours($req, $tbProducts)
+    {
+        return DB::table($tbProducts)
+            ->where('id', $req->product_id)
+            ->select('duration_minutes', 'opens_at', 'closes_at')
+            ->first();
+    }
+
+    // Gera todos os horários possíveis com base na duração e horário de abertura/fechamento
+    public function getAvailableTimes($data)
+    {
+        $duration = $data->duration_minutes;
+        $opens = Carbon::parse($data->opens_at);
+        $closes = Carbon::parse($data->closes_at);
+
+        $times = [];
+        $current = $opens->copy();
+
+        while ($current->lt($closes)) {
+            $endTime = $current->copy()->addMinutes($duration);
+            if ($endTime->lte($closes)) {
+                $times[] = [
+                    'start' => $current->format('H:i'),
+                    'end'   => $endTime->format('H:i'),
+                ];
+            }
+            $current->addMinutes($duration);
+        }
+
+        return $times;
+    }
+
+    // Pega todas as reservas existentes de um produto em uma data específica
+    public function getReservationsTime($productId, $table, $date)
+    {
+        return DB::table($table)
+            ->where('date', $date)
+            ->where('product_id', $productId)
+            ->select('start_time', 'end_time')
+            ->get();
+    }
+
+    // Filtra horários disponíveis removendo os que conflitam com reservas existentes
+    public function filterTimes($horarios, $reservasHorarios)
+    {
+        if (empty($reservasHorarios) || count($reservasHorarios) === 0) {
+            return $horarios;
+        }
+
+        $reservasHorarios = is_array($reservasHorarios) ? $reservasHorarios : $reservasHorarios->all();
+
+        return array_values(array_filter($horarios, function ($bloco) use ($reservasHorarios) {
+            $blocoStart = Carbon::parse($bloco['start']);
+            $blocoEnd = Carbon::parse($bloco['end']);
+
+            foreach ($reservasHorarios as $reserva) {
+                if (!isset($reserva->start_time) || !isset($reserva->end_time)) {
+                    continue;
+                }
+
+                $reservaStart = Carbon::parse($reserva->start_time);
+                $reservaEnd = Carbon::parse($reserva->end_time);
+
+                if ($blocoStart < $reservaEnd && $blocoEnd > $reservaStart) {
+                    return false;
+                }
+            }
+            
+            return true;
+        }));
+    }
+    
+    public function createCalendarReserva($req)
+    {
+        $baseUrl = dirname(request()->url()); // remove a última "pasta"
+    // Nome da tabela dinâmica (ex: admin_admin_com_reservations)
+    $table = $req->where_to;
+
+    // Pega duração do produto (já existe no service)
+    $product = DB::table($req->Products)
+        ->where('id', $req->product_id)
+        ->select('duration_minutes')
+        ->first();
+
+    if (!$product) {
+    return redirect($baseUrl)->with('error', 'Produto não encontrado!');
+    }
+
+    // Calcula end_time baseado no start_time + duração
+    $start = Carbon::parse($req->hora);
+    $end = $start->copy()->addMinutes($product->duration_minutes);
+
+    // Data enviada no request (provavelmente vem como input hidden)
+    $date = $req->date ?? date('Y-m-d'); // ajuste se necessário
+
+    // Monta a reserva
+    $insert = [
+        'product_id'   => $req->product_id,
+        'date'         => $date,
+        'start_time'   => $start->format('H:i'),
+        'end_time'     => $end->format('H:i'),
+        'client_name'  => $req->client_name,
+        'client_phone' => $req->client_phone ?? null,
+        'status'       => $req->status ?? 'pending',
+        'created_at'   => now(),
+        'updated_at'   => now(),
+    ];
+
+    DB::table($table)->insert($insert);
+
+    return redirect($baseUrl)->with('success', 'Reserva criada com sucesso!');
+
 
 }
+
+
+}
+
 
 ?>

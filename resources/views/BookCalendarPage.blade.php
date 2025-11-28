@@ -97,7 +97,7 @@
             </div>
         @endif
         
-        <form method="POST" id="reservation-form" class="space-y-6">
+        <form action="{{ route('bookcalendar', ['empresa' => $empresa, 'name' => $name]) }}" method="POST" class="space-y-6">
             @csrf
 
             {{-- Hidden Fields --}}
@@ -128,69 +128,21 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 
                 {{-- Data --}}
-                @if ($productInfo->type === 'interval')
+                @if ($productInfo->type === 'calendar')
                     
                 <div>
                     <label for="date" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Data:</label>
                     <input type="date" name="date" id="date" required
+                    
+                    
                     class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-4 focus:ring-sky-500/50 focus:border-sky-500 text-gray-900 dark:text-gray-100 transition duration-300 ease-in-out shadow-sm">
                 </div>
-                
-                {{-- Hora Início --}}
-                <div>
-                    <label for="start_time" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Hora de Início:</label>
-                    <input type="time" name="start_time" id="start_time" 
-                    min="{{ $productInfo->opens_at ?? '' }}" 
-                    max="{{ $productInfo->closes_at ?? '' }}" 
-                    required
-                    class="time-input w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-4 focus:ring-sky-500/50 focus:border-sky-500 text-gray-900 dark:text-gray-100 transition duration-300 ease-in-out shadow-sm">
-                </div>
-                
-                {{-- Hora Fim --}}
-                <div>
-                    <label for="end_time" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Hora de Término:</label>
-                    <input type="time" name="end_time" id="end_time" 
-                    min="{{ $productInfo->opens_at ?? '' }}" 
-                    max="{{ $productInfo->closes_at ?? '' }}" 
-                    required
-                    class="time-input w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-4 focus:ring-sky-500/50 focus:border-sky-500 text-gray-900 dark:text-gray-100 transition duration-300 ease-in-out shadow-sm">
-                </div>
-                
-                {{-- Telefone do Cliente (COM MÁSCARA JS) --}}
-                <div>
-                    <label for="client_phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Telefone (DDD + Número):</label>
-                    <input required type="text" name="client_phone" id="client_phone" placeholder="(99) 99999-9999" maxlength="15"
-                    class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-4 focus:ring-sky-500/50 focus:border-sky-500 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 transition duration-300 ease-in-out shadow-sm">
-                </div>
             </div>
+            <input  value="Escolher Hora" type="submit">
             @endif
 
 
 
-            
-            <!-- Card de Resumo do Custo (Dinâmico) -->
-            <div id="summary-card" class="p-4 bg-sky-50 dark:bg-sky-950 rounded-xl border border-sky-200 dark:border-sky-800 text-center shadow-md">
-                <p class="text-sm font-semibold text-sky-700 dark:text-sky-300 mb-1">Resumo da Reserva</p>
-                <p class="text-base text-gray-700 dark:text-gray-200">
-                    Duração: <span id="duration-display" class="font-bold text-sky-600 dark:text-sky-400">0 min</span>
-                </p>
-                <p class="text-xl font-extrabold text-sky-800 dark:text-sky-200">
-                    Total: R$ <span id="total-cost-display">0,00</span>
-                </p>
-            </div>
-            
-            {{-- Botão de Envio (COM ESTADOS INTERATIVOS) --}}
-            <button type="submit" id="submit-button"
-                    class="w-full py-4 bg-sky-600 hover:bg-sky-700 text-white font-extrabold rounded-xl shadow-lg shadow-sky-500/50 
-                           transition-all duration-300 ease-in-out transform hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed
-                           focus:outline-none focus:ring-4 focus:ring-sky-500/50 tracking-wide flex items-center justify-center space-x-2">
-                <span id="button-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-                    </svg>
-                </span>
-                <span id="button-text">Fazer Reserva Agora</span>
-            </button>
         </form>
     </div>
 @else
@@ -205,79 +157,6 @@
 @endif
 
 <script>
-    // --- 1. LÓGICA DE CÁLCULO DINÂMICO DE CUSTO/DURAÇÃO (CORRIGIDA) ---
-    const startTimeInput = document.getElementById('start_time');
-    const endTimeInput = document.getElementById('end_time');
-    const durationDisplay = document.getElementById('duration-display');
-    const totalCostDisplay = document.getElementById('total-cost-display');
-    const durationMinutesInput = document.getElementById('duration_minutes_input');
-    
-    // CORRIGIDO: Variável agora lida corretamente o ID 'product_price_per_hour'
-    const productPriceEl = document.getElementById('product_price_per_hour');
-    
-    // Preço por hora (R$)
-    // Importante: Assume-se que o valor no input hidden está em formato float (ex: 150.00)
-    const pricePerHour = parseFloat(productPriceEl ? productPriceEl.value : 0) || 0;
-
-    function calculateReservation() {
-        const startTime = startTimeInput.value;
-        const endTime = endTimeInput.value;
-        const dateInput = document.getElementById('date');
-
-        if (!startTime || !endTime || !dateInput.value) {
-            durationDisplay.textContent = '0 min';
-            totalCostDisplay.textContent = pricePerHour === 0 ? '0,00' : '...';
-            durationMinutesInput.value = 0;
-            return;
-        }
-
-        const date = dateInput.value;
-        
-        // Cria objetos Date para cálculo
-        let startDateTime = new Date(`${date}T${startTime}:00`);
-        let endDateTime = new Date(`${date}T${endTime}:00`);
-
-        // Lida com reserva que termina no dia seguinte (Se a hora final for menor que a inicial)
-        if (endDateTime.getTime() <= startDateTime.getTime()) {
-             // Só adiciona um dia se as horas não forem iguais (duração mínima de 1 minuto)
-             if (endDateTime.getTime() !== startDateTime.getTime()) {
-                endDateTime = new Date(endDateTime.getTime() + 24 * 60 * 60 * 1000); // Adiciona 24h
-            } else {
-                 // Duração zero, sai.
-                 durationDisplay.textContent = '0 min';
-                 totalCostDisplay.textContent = '0,00';
-                 durationMinutesInput.value = 0;
-                 return;
-            }
-        }
-
-        const durationMs = endDateTime - startDateTime;
-        const durationMins = Math.round(durationMs / (1000 * 60)); // Duração em minutos
-
-        let totalCost = 0;
-        if (pricePerHour > 0) {
-            // CORRIGIDO: Cálculo de custo
-            // Custo = Preço por hora * (Duração em minutos / 60)
-            totalCost = pricePerHour * (durationMins / 60);
-        } else {
-            // Se o preço for 0, é uma reserva gratuita.
-            totalCost = 0;
-        }
-
-        // Atualiza a UI com formatação BR
-        durationDisplay.textContent = `${durationMins} min`;
-        totalCostDisplay.textContent = totalCost.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        durationMinutesInput.value = durationMins; // Salva a duração no campo hidden
-    }
-
-    // Adiciona listeners para cálculo em tempo real
-    startTimeInput.addEventListener('change', calculateReservation);
-    endTimeInput.addEventListener('change', calculateReservation);
-    document.getElementById('date').addEventListener('change', calculateReservation);
-    
-    // Executa o cálculo inicial se houver valores pré-definidos
-    calculateReservation();
-
 
     // --- 2. LÓGICA DA MÁSCARA DE TELEFONE (DDD + 9 dígitos) ---
     const phoneInput = document.getElementById('client_phone');
@@ -297,12 +176,6 @@
     if (phoneInput) {
         phoneInput.addEventListener('keyup', phoneMask);
     }
-
-    // --- 3. LÓGICA DO ESTADO DO BOTÃO (LOADING/SUCCESS) ---
-    const submitButton = document.getElementById('submit-button');
-    const buttonText = document.getElementById('button-text');
-    const buttonIcon = document.getElementById('button-icon');
-    const form = document.getElementById('reservation-form');
 
     form.addEventListener('submit', function(e) {
         // e.preventDefault(); // Descomente para testes de UI sem envio real
