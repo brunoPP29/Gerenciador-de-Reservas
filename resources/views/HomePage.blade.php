@@ -83,7 +83,7 @@
             <h2 class="text-2xl font-bold text-gray-300 mb-4 border-b border-gray-700/50 pb-2">Status Rápido</h2>
             <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 space-y-4 mb-4">
                 <p class="text-lg text-gray-300 flex justify-between items-center">
-                    <span class="font-semibold">Reservas confirmadas:</span>
+                    <span class="font-semibold">Reservas:</span>
                     <span class="text-green-400 font-bold">{{ $statusReservations[0] }}</span>
                 </p>
             </div>

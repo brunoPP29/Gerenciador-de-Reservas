@@ -119,6 +119,7 @@ class StoreService{
             $data['updated_at'] = now();
 
             if(DB::table($table)->insert($data)){
+                session()->regenerate();
                 return back()->with('success', 'A reserva foi concluída com sucesso');
             }else{
                 return back()->with('error', 'Aconteceu um erro! Caso persista entre em contato');
@@ -238,6 +239,7 @@ class StoreService{
     ];
 
     DB::table($table)->insert($insert);
+    session()->regenerate();
 
     return redirect($baseUrl)->with('success', 'Reserva criada com sucesso!');
 

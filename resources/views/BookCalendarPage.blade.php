@@ -138,7 +138,9 @@
                     class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-4 focus:ring-sky-500/50 focus:border-sky-500 text-gray-900 dark:text-gray-100 transition duration-300 ease-in-out shadow-sm">
                 </div>
             </div>
-            <input  value="Escolher Hora" type="submit">
+            <input value="Escolher Hora" type="submit"
+       class="w-full py-3 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-lg shadow-lg shadow-sky-500/30 transition duration-300 ease-in-out cursor-pointer transform hover:scale-[1.01]">
+
             @endif
 
 
