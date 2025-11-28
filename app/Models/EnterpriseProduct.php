@@ -16,6 +16,7 @@ class EnterpriseProduct extends Model
         'duration_minutes',
         'opens_at',
         'closes_at',
-        'description'
+        'description',
+        'type'
     ];
 }

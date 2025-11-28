@@ -20,7 +20,8 @@ public function __construct(EnterpriseProductService $service)
         if ($redirect === false) {
             return view('404Page');
         } else {
-            return view($redirect);
+            $getTypes = $this->service->getTypes();
+            return view($redirect, compact('getTypes'));
         }
     }
 

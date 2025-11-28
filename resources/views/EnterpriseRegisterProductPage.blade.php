@@ -59,8 +59,20 @@
             <div>
                 <label for="name" class="sr-only">Nome do Produto</label>
                 <input type="text" id="name" placeholder="Nome do Produto ou Serviço..." name="name" required
-                       class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-sky-500 focus:border-sky-500 placeholder-gray-400 text-gray-100 transition duration-200 ease-in-out">
+                class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-sky-500 focus:border-sky-500 placeholder-gray-400 text-gray-100 transition duration-200 ease-in-out">
             </div>
+            
+                        <div>
+                            <label for="type" class="sr-only">Descrição</label>
+                                <select id="type" name="type"
+                                        class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-sky-500 focus:border-sky-500 placeholder-gray-400 text-gray-100 transition duration-200 ease-in-out">
+
+                                    @foreach($getTypes as $type)
+                                        <option value="{{ $type->type }}">{{ $type->name }}</option>
+                                    @endforeach
+                                </select>
+
+                        </div>
 
             {{-- Price Input --}}
             <div>

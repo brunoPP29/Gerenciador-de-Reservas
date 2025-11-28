@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\EnterpriseProduct;
 
 class EnterpriseProductService{
@@ -18,6 +19,11 @@ public function checkLogin()
     }
 }
 
+    public function getTypes(){
+        $types = DB::table('types')
+        ->get();
+        return $types;
+    }
         public function register($req)
         {
             // nome seguro da tabela dinâmica
@@ -36,6 +42,7 @@ public function checkLogin()
             $product->opens_at = $req->opens_at;
             $product->closes_at = $req->closes_at;
             $product->description = $req->description ?? '';
+            $product->type = $req->type ?? 'interval';
 
             // salva usando Eloquent
             $product->save();
