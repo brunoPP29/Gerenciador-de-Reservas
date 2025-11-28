@@ -30,7 +30,7 @@ O projeto é construído sobre uma pilha de tecnologias robusta e moderna:
 
 *   **Backend:** PHP 8.1+
 *   **Framework:** Laravel 10.x
-*   **Banco de Dados:** (A ser definido, mas tipicamente MySQL, PostgreSQL ou SQLite)
+*   **Banco de Dados:** MySql
 *   **Gerenciador de Dependências:** Composer
 
 ## ✨ Funcionalidades Atuais
@@ -53,7 +53,7 @@ Siga os passos abaixo para configurar o ambiente de desenvolvimento:
 *   PHP >= 8.1
 *   Composer
 *   Um servidor web (Apache ou Nginx) ou Laravel Sail/Herd
-*   Banco de dados (MySQL, PostgreSQL, etc.)
+*   Banco de dados MySql
 
 ### Passos de Instalação
 
