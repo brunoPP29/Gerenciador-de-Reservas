@@ -6,7 +6,6 @@ Editar dados pessoais
     XX TRATAR ERROS DE GET EM POST
 
  -novos tipos de reservas(escolher quando criar o produto)
-    =por calendario(diariamente vai ter 6 horario por exemplo de tal a tal hora)
     =por diaria
 
 -painel administrativo enterprise

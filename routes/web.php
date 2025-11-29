@@ -7,6 +7,7 @@ use App\Http\Controllers\EnterpriseRegisterController;
 use App\Http\Controllers\EnterpriseProductController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\StoreController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ReservasController::class, 'index']);
@@ -27,4 +28,6 @@ Route::get('client/my_appointments', [ReservationController::class, 'index']);
 Route::get('/client/delete/{id}/{table}', [ReservationController::class, 'deleteItem']);
 Route::post('/loja/{empresa}/{name}/bookcalendar', [StoreController::class, 'checkHours'])
     ->name('bookcalendar');
+Route::get('/client/profile', [ProfileController::class, 'index']);
+Route::post('/client/profile', [ProfileController::class, 'edit']);
 
