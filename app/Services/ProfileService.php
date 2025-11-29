@@ -3,6 +3,7 @@
 namespace App\Services;
 use App\Models\Users;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileService{
 
@@ -39,12 +40,26 @@ class ProfileService{
     }
 
 
-    public function getUserId($username, $password){
-        Users::query()
-            ->where('user', $username)
-            ->update(['password' => $password]);
+    public function updatePassword($req)
+    {
+        $userName = session('userName');
+        $newPassword = $req->password;
+        $confirm = $req->confpassword;
 
-        return back()->with('success', 'Usuário alterado com sucesso!');
+        $user = Users::where('user', $userName)->first();
+
+        if (!$user) {
+            return back()->with('error', 'Usuário não encontrado');
+        }
+
+        if (!Hash::check($confirm, $user->password)) {
+            return back()->with('error', 'Senha incorreta');
+        }
+
+        $user->password = Hash::make($newPassword);
+        $user->save();
+
+        return back()->with('success', 'Senha alterada com sucesso!');
     }
 
 }

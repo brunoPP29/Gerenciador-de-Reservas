@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 use App\Services\ProfileService;
 
 class ProfileController extends Controller{
@@ -20,16 +21,12 @@ class ProfileController extends Controller{
     }
 
     public function edit(Request $req){
-        if (isset($req->username)) {
-            $newUser = $req->username;
-            $this->service->editUserName($newUser);
+            if (isset($req->password)) {
+        return $this->service->updatePassword($req);
         }
-        if(isset($req->password)){
-            $newPassword = $req->password;
-            $relativeUser = session('userName');
 
-            $getUserId = $this->service->getUserId($relativeUser, $newPassword);
+        return back();
+
         }
     }
 
-}
