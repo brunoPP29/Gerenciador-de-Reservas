@@ -88,6 +88,12 @@
                        class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-sky-500 focus:border-sky-500 placeholder-gray-400 text-gray-100 transition duration-200 ease-in-out">
             </div>
 
+            <div>
+                <label for="duration_minutes" class="sr-only">Mínimo de pessoas</label>
+                <input type="number" id="min_people" placeholder="Pessoas minimas..." name="min_people" required
+                       class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-sky-500 focus:border-sky-500 placeholder-gray-400 text-gray-100 transition duration-200 ease-in-out">
+            </div>
+
             {{-- Opens At Input --}}
             <div>
                 <label for="opens_at" class="block text-sm font-medium text-gray-300 mb-1">Início das Operações (Horário de Abertura):</label>

@@ -30,7 +30,7 @@ class StoreController extends Controller
     public function reserve(Request $request){
     // checar login
     $check = $this->service->checkLogin();
-        if ($check) {}else{return $check;}
+        if (!$check) {}else{return $check;}
 
     // nome da tabela onde salvar (ex: admin_admin_com_reservations)
     $table = $request->input('where_to');
@@ -46,7 +46,7 @@ public function checkHours(Request $req)
 
 
         if(isset($req->hora)){
-            if (!session('userName')) {
+            if (!session('logado')) {
                 $plainUrl = request()->url();
                 $baseUrl = dirname($plainUrl);
                 session()->put('urlAfter', $baseUrl);
@@ -59,6 +59,7 @@ public function checkHours(Request $req)
         $data = $req->date;
         $tbReservations = $req->where_to; // tabela de reservas
         $tbProducts = $req->Products;     // tabela de produtos
+
 
         // Pega informações do produto (duração, abertura/fechamento)
         $infosProduct = $this->service->getHours($req, $tbProducts);

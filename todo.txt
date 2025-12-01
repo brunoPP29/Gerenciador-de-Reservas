@@ -1,8 +1,3 @@
-Editar dados pessoais
- -mudar nome
-    =alterar todos as reservas que contem esse clientname
-    =mudar a senha via email
-
     XX TRATAR ERROS DE GET EM POST
 
  -novos tipos de reservas(escolher quando criar o produto)
@@ -12,3 +7,9 @@ Editar dados pessoais
     =filtra por produto
     =deletar e editar reservas
     =editar produtos(nao vai poder mudar o tipo)
+
+-Tempo de cancelamento previo ajustavel no cadastro de produtos
+-melhor pagina de produtos, listagem e filtragem
+-saber quantas pessoas são: se no cadastro do produto foi marcado o precisa de quantidade de pessoas
+   vai ter o input
+   se não, é livre

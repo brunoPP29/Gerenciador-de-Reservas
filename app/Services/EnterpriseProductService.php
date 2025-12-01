@@ -24,7 +24,9 @@ public function checkLogin()
         ->get();
         return $types;
     }
-        public function register($req)
+
+
+    public function register($req)
         {
             // nome seguro da tabela dinâmica
             $tableName = preg_replace('/[^a-zA-Z0-9]/', '_', session('tableOrigin')) . '_products';
@@ -43,6 +45,7 @@ public function checkLogin()
             $product->closes_at = $req->closes_at;
             $product->description = $req->description ?? '';
             $product->type = $req->type ?? 'interval';
+            $product->min_people = $req->min_people ?? '0';
 
             // salva usando Eloquent
             $product->save();

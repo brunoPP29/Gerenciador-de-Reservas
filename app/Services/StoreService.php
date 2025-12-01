@@ -15,7 +15,7 @@ class StoreService{
 
         if (session('logado') === true) {
             session()->put('urlAfter', false);
-            return true;
+            return false;
         }else{
             session()->put('urlAfter', $url);
             return redirect('/');
@@ -211,7 +211,6 @@ class StoreService{
     // Pega duração do produto (já existe no service)
     $product = DB::table($req->Products)
         ->where('id', $req->product_id)
-        ->select('duration_minutes')
         ->first();
 
     if (!$product) {
@@ -225,6 +224,12 @@ class StoreService{
     // Data enviada no request (provavelmente vem como input hidden)
     $date = $req->date ?? date('Y-m-d'); // ajuste se necessário
 
+    if ($req->peoples >= $product->min_people) {
+
+    }else{
+         return redirect($baseUrl)->with('error', 'Selecione a quantidade de pessoas mínimas!');
+    }
+
     // Monta a reserva
     $insert = [
         'product_id'   => $req->product_id,
@@ -234,16 +239,29 @@ class StoreService{
         'client_name'  => $req->client_name,
         'client_phone' => $req->client_phone ?? null,
         'status'       => $req->status ?? 'pending',
+        'peoples'      => $req->peoples ?? '0',
         'created_at'   => now(),
         'updated_at'   => now(),
     ];
 
     DB::table($table)->insert($insert);
+
     session()->regenerate();
+
 
     return redirect($baseUrl)->with('success', 'Reserva criada com sucesso!');
 
 
+}
+
+public function checkMinPeople($peoples, $min_people){
+    if ($peoples >= $min_people) {
+        return true;
+    }else{
+        $baseUrl = dirname(request()->url());
+        return redirect($baseUrl)->with('error', 'Insira a quantidade mínima de pessoas!');
+
+    }
 }
 
 

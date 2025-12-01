@@ -41,6 +41,8 @@
             <input type="hidden" name="product" value="{{ $req->product ?? '' }}">
             <input type="hidden" name="date" value="{{ $req->date ?? '' }}">
             <input type="hidden" name="status" value="confirmed">
+            <input type="hidden" name="min_people" value="{{ $req->min_people }}">
+            <input type="hidden" name="peoples" value="{{ $req->peoples ?? '' }}">
             <input type="hidden" value="{{ session('userName') }}" name="client_name" id="client_name">
 
             {{-- Time Slot Selection --}}
@@ -66,6 +68,7 @@
                 <input type="number" name="client_phone" id="client_phone" placeholder="Client Phone (Required)" required
                        class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-sky-500 focus:border-sky-500 placeholder-gray-400 text-gray-100 transition duration-200 ease-in-out">
             </div>
+
 
             {{-- Submit Button --}}
             <input type="submit" value="Reservar!"
