@@ -113,16 +113,20 @@ class StoreService{
                 return $conflict;
             }else{
 
-            $data = Arr::except($data, ['duration_minutes']);
-            // garante timestamps
-            $data['created_at'] = now();
-            $data['updated_at'] = now();
-
-            if(DB::table($table)->insert($data)){
-                session()->regenerate();
-                return back()->with('success', 'A reserva foi concluída com sucesso');
+                if($data['peoples'] >= $data['min_people']){
+                    //continua
+                    $data['created_at'] = now();
+                    $data['updated_at'] = now();
+                    
+                    $data = Arr::except($data, ['duration_minutes', 'min_people']);
+                if(DB::table($table)->insert($data)){
+                    session()->regenerate();
+                    return back()->with('success', 'A reserva foi concluída com sucesso');
+                }else{
+                    return back()->with('error', 'Aconteceu um erro! Caso persista entre em contato');
+                }
             }else{
-                return back()->with('error', 'Aconteceu um erro! Caso persista entre em contato');
+                return back()->with('error', 'Verifique a quantidade de pessoas mínimas');
             }
             }
 

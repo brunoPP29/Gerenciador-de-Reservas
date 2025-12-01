@@ -106,6 +106,7 @@
             <input type="hidden" name="product_id" value="{{ $productInfo->id ?? '' }}">
             <input type="hidden" name="product" value="{{ $productInfo->name ?? '' }}">
             <input type="hidden" name="status" value="confirmed">
+            <input type="hidden" name="min_people" value="{{ $productInfo->min_people }}">
             <input type="hidden" value="{{ session('userName') }}" name="client_name" id="client_name">
             
             {{-- CORRIGIDO: Usando 'price_per_hour' --}}
@@ -121,6 +122,9 @@
                 </p>
                 <p class="text-sm text-gray-600 dark:text-gray-300">
                     <span class="font-semibold">Horário de Funcionamento:</span> {{ $productInfo->opens_at ?? 'N/A' }} até {{ $productInfo->closes_at ?? 'N/A' }}
+                </p>
+                <p class="text-sm text-gray-600 dark:text-gray-300">
+                    <span class="font-semibold">Mínimo de pessoas:</span> {{ $productInfo->min_people ?? 'N/A' }}
                 </p>
             </div>
 
@@ -155,6 +159,15 @@
                     required
                     class="time-input w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-4 focus:ring-sky-500/50 focus:border-sky-500 text-gray-900 dark:text-gray-100 transition duration-300 ease-in-out shadow-sm">
                 </div>
+
+                @if ($productInfo->min_people > 0)
+                <div>
+                    <label for="peoples" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Quantidade de pessoas:</label>
+                    <input type="number" name="peoples" id="peoples" 
+                    required
+                    class="time-input w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-4 focus:ring-sky-500/50 focus:border-sky-500 text-gray-900 dark:text-gray-100 transition duration-300 ease-in-out shadow-sm">
+                </div>
+                @endif
                 
                 {{-- Telefone do Cliente (COM MÁSCARA JS) --}}
                 <div>
