@@ -29,10 +29,18 @@ public function login($req)
     
     if ($infos && Hash::check($req->password, $infos->password)) {
         $enterpriseName = EnterpriseLogin::where('email', $req->email)->value('name');
-        session()->put('tableOrigin', $infos->email);
-        session()->put('logadoenterprise', true);
-        session()->put('userEnterprise', $enterpriseName);
-        return view('EnterprisePage');
+                if (session('urlAfter') == true) {
+                session()->put('logadoenterprise', true);
+                session()->put('userEnterprise', $enterpriseName);
+                $urlAfter = session('urlAfter');
+                session()->put('urlAfter', null);
+                return redirect((string) $urlAfter);
+                }else{
+                    session()->put('tableOrigin', $infos->email);
+                    session()->put('logadoenterprise', true);
+                    session()->put('userEnterprise', $enterpriseName);
+                    return view('EnterprisePage');
+                    }
     }
 
     return redirect()->back()->withInput()->with('error', 'Usuário ou senha incorretos!');

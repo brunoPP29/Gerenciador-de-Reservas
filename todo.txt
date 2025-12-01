@@ -9,4 +9,3 @@
     =editar produtos(nao vai poder mudar o tipo)
 
 -Tempo de cancelamento previo ajustavel no cadastro de produtos
--melhor pagina de produtos, listagem e filtragem

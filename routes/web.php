@@ -6,6 +6,7 @@ use App\Http\Controllers\EnterpriseLoginController;
 use App\Http\Controllers\EnterpriseRegisterController;
 use App\Http\Controllers\EnterpriseProductController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\EnterpriseManagementController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -29,5 +30,6 @@ Route::get('/client/delete/{id}/{table}', [ReservationController::class, 'delete
 Route::post('/loja/{empresa}/{name}/bookcalendar', [StoreController::class, 'checkHours'])
     ->name('bookcalendar');
 Route::get('/client/profile', [ProfileController::class, 'index']);
+Route::get('/enterprise/manageProducts', [EnterpriseManagementController::class, 'products']);
 Route::post('/client/profile', [ProfileController::class, 'edit']);
 

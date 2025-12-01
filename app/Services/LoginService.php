@@ -38,7 +38,9 @@ class LoginService
             if (session('urlAfter') == true) {
                 session()->put('logado', true);
                 session()->put('userName', $userInput);
-                return redirect((string) session('urlAfter'));
+                $urlAfter = session('urlAfter');
+                session()->put('urlAfter', null);
+                return redirect((string) $urlAfter);
             }else{
             session()->put('logado', true);
             session()->put('userName', $userInput);
