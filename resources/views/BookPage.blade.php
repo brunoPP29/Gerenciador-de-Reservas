@@ -101,8 +101,8 @@
             @csrf
 
             {{-- Hidden Fields --}}
-            <input type="hidden" name="where_to" value="{{ $tbReservation ?? '' }}">
-            <input type="hidden" name="Products" value="{{ $tbProducts ?? '' }}">
+            <input type="hidden" name="where_to" value="{{ session('tbReservations') ?? '' }}">
+            <input type="hidden" name="Products" value="{{ session('tbProducts') ?? '' }}">
             <input type="hidden" name="product_id" value="{{ $productInfo->id ?? '' }}">
             <input type="hidden" name="product" value="{{ $productInfo->name ?? '' }}">
             <input type="hidden" name="status" value="confirmed">

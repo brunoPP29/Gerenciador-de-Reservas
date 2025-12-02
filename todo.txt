@@ -1,4 +1,3 @@
-    XX TRATAR ERROS DE GET EM POST
-
+confirmação de e-mail de reserva
 
 -Tempo de cancelamento previo ajustavel no cadastro de produtos

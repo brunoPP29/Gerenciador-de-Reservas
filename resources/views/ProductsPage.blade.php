@@ -192,7 +192,6 @@
                     productCard.className = 'bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-700 flex flex-col lg:flex-row justify-between items-start lg:items-center space-y-4 lg:space-y-0 transition duration-300 ease-in-out card-hover';
                     
                     // Cria o slug do produto para o link
-                    const productSlug = product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-*|-*$/g, '');
 
                     // Informações Adicionais (Badges)
                     const badges = `
@@ -212,7 +211,7 @@
                             ${badges}
                         </div>
                         
-                        <a href="/reservas/public/loja/${EMPRESA_SLUG}/${productSlug}"
+                        <a href="/reservas/public/loja/${EMPRESA_SLUG}/${product.name}"
                            class="inline-flex items-center justify-center px-6 py-3 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-lg shadow-lg shadow-sky-500/30 transition duration-300 ease-in-out transform hover:scale-[1.03] shrink-0 text-base">
                             Agendar Agora
                         </a>

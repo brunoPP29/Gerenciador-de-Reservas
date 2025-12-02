@@ -24,23 +24,17 @@ class StoreService{
     }
 
     public function checkEnterprise($empresa, $name){
-        $tbprodutos = $empresa.'_products';;
-        if (Schema::hasTable($tbprodutos)) {
-            $produtos = DB::table($tbprodutos)->get();
+        if (Schema::hasTable(session('tbProducts'))) {
+            $produtos = DB::table(session('tbProducts'))->get();
                         //se tiver parametros
                         
                         if ($name != null) {
-                        $clientName = session('userName');
-                        session()->put('tbReservation', $empresa.'_reservations');
-                        $tbReservation = session('tbReservation');
-                        session()->put('tbProducts', $empresa.'_products');
-                        $tbProducts = session('tbProducts');
-                        $productInfo = $this->getProduct($name, $tbProducts);
+                        $productInfo = $this->getProduct($name);
                         if ($productInfo->type === 'calendar') {
-                            return view('BookCalendarPage', compact('tbReservation', 'tbProducts', 'name', 'productInfo', 'empresa'));
+                            return view('BookCalendarPage', compact('name', 'productInfo', 'empresa'));
                         }
 
-                        return view('BookPage', compact('tbReservation', 'tbProducts', 'name', 'productInfo'));
+                        return view('BookPage', compact('name', 'productInfo'));
                     }else{
                         $dadosEmpresa = $this->getEnterprise($empresa);
                         return view('ProductsPage', compact('produtos', 'dadosEmpresa', 'empresa'));
@@ -62,9 +56,9 @@ class StoreService{
 
     }
 
-    public function getProduct($nameItem, $tbProducts){
-    $nameItem = str_replace('-', ' ', $nameItem);
-    return DB::table($tbProducts)
+    public function getProduct($nameItem){
+    //$nameItem = str_replace('-', ' ', $nameItem);
+    return DB::table(session('tbProducts'))
         ->where('name', $nameItem)
         ->first();
 

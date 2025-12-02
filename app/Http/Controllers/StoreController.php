@@ -19,8 +19,9 @@ class StoreController extends Controller
     public function index($empresa, $name = null)
     {
 
+        session()->put('tbProducts', $empresa.'_products');
+        session()->put('tbReservations', $empresa.'_reservations');
         $databaseOrigin = $this->service->checkEnterprise($empresa, $name);
-
         return $databaseOrigin;
          
          
