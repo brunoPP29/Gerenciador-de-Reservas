@@ -1,6 +1,4 @@
     XX TRATAR ERROS DE GET EM POST
 
- -novos tipos de reservas(escolher quando criar o produto)
-    =por diaria
 
 -Tempo de cancelamento previo ajustavel no cadastro de produtos

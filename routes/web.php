@@ -37,4 +37,6 @@ Route::get('/enterprise/reservations', [EnterpriseManagementController::class, '
 Route::get('/enterprise/reservations/status/{id}', [EnterpriseManagementController::class, 'statusChange']);
 Route::get('/enterprise/reservations/delete/{id}', [EnterpriseManagementController::class, 'deleteReservation']);
 
-
+Route::fallback(function () {
+    abort(404);
+});

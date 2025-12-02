@@ -40,7 +40,6 @@
 
         /* Estilo para o input em foco */
         .input-focus:focus {
-            border-color: theme('colors.accent');
             box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.5);
         }
 
