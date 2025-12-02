@@ -24,6 +24,23 @@ public function __construct(EnterpriseManagementService $service)
         }
     }
 
+    public function deleteProduct(Request $req){
+        $login = $this->service->checkLogin();
+
+        if (!$login) {
+            $idDelete = $req->id;
+            $delete = $this->service->deleteProduct($idDelete);
+            if ($delete) {
+                return redirect('/enterprise/manageProducts');
+            }
+            $products = $this->service->getProducts();
+            return view('EnterpriseProductManagementPage', compact('products'));
+        }else{
+            return $login;
+        }
+        
+    }
+
 }
 
 

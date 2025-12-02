@@ -247,52 +247,19 @@
                             <span class="header-label lg:hidden">Mín. Pessoas:</span> ${product.min_people}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button onclick="handleDelete(${product.id}, '${product.name}')" 
+                            <a   href="product/delete/${product.id}"
                                     class="text-red-500 hover:text-red-700 transition duration-150 ease-in-out transform hover:scale-105">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
                                 </svg>
                                 <span class="lg:hidden ml-1">Deletar</span>
-                            </button>
+                            </a>
                         </td>
                     `;
                     productsList.appendChild(row);
                 });
             } else {
                 document.getElementById('no-products-message').classList.remove('hidden');
-            }
-        };
-
-        // 4. FUNÇÃO DE AÇÃO (DELETAR)
-        const handleDelete = (productId, productName) => {
-            if (confirm(`Tem certeza que deseja deletar o produto "${productName}" (ID: ${productId})?`)) {
-                // Aqui você faria a chamada AJAX/Fetch para o seu backend Laravel
-                // Exemplo:
-                // fetch(`/products/${productId}`, {
-                //     method: 'DELETE',
-                //     headers: {
-                //         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                //     }
-                // })
-                // .then(response => {
-                //     if (response.ok) {
-                //         alert('Produto deletado com sucesso!');
-                //         // Recarrega a página ou remove o item da lista (para este exemplo, apenas alertamos)
-                //         window.location.reload(); 
-                //     } else {
-                //         alert('Erro ao deletar o produto.');
-                //     }
-                // });
-
-                // Para fins de demonstração, apenas um alerta:
-                alert(`Ação de DELETAR para o produto ${productName} (ID: ${productId}) seria executada aqui.`);
-                
-                // Em um ambiente real, após o sucesso, você removeria o item da lista sem recarregar a página
-                // const index = PRODUCTS.findIndex(p => p.id === productId);
-                // if (index > -1) {
-                //     PRODUCTS.splice(index, 1);
-                //     filterProducts(); // Re-renderiza a lista
-                // }
             }
         };
 

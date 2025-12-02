@@ -3,7 +3,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
 
-
+use function PHPUnit\Framework\returnValue;
 
 class EnterpriseManagementService
 {
@@ -23,6 +23,17 @@ class EnterpriseManagementService
         ->get();
 
 
+    }
+
+    public function deleteProduct($id){
+        $delete = DB::table(session('tbProducts'))
+            ->where('id', $id)
+            ->delete();
+        if ($delete) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
 
