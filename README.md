@@ -1,122 +1,107 @@
+# 📅 Gerenciador de Reservas
 
-## 📅 Gerenciador de Reservas
+## 📝 Sobre o Projeto
 
-<p align="center">
-  <a href="https://laravel.com" target="_blank">
-    <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="200" alt="Laravel Logo">
-  </a>
-</p>
+O **Gerenciador de Reservas** é uma aplicação web desenvolvida em Laravel com arquitetura **Multi-Usuário**, projetada para operar com dois perfis distintos:
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Laravel-v10.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel Version">
-  <img src="https://img.shields.io/badge/PHP-v8.1+-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP Version">
-  <img src="https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow?style=for-the-badge" alt="Status do Projeto">
-</p>
+*   **Clientes (Usuários Comuns):** Realizam e gerenciam suas reservas.
+*   **Empresas (Fornecedores):** Cadastram seus produtos/serviços e operam suas próprias "lojas" dentro do sistema.
 
-## 📝 Descrição do Projeto
+O sistema garante que cada **Empresa** tenha **gestão 100% individual** sobre seus produtos e reservas, funcionando como um *marketplace* onde cada fornecedor oferece seus serviços separadamente e com total isolamento de dados em relação às outras empresas.
 
-O **Gerenciador de Reservas** é uma aplicação web desenvolvida em Laravel, projetada para facilitar a gestão de reservas de produtos ou serviços. O sistema oferece uma plataforma dupla, permitindo o registro e login de **usuários comuns** (clientes) e **usuários empresariais** (fornecedores), que podem cadastrar seus produtos/serviços e gerenciar suas respectivas lojas e reservas.
+## ✨ Funcionalidades Atuais
 
-**Principais Módulos Identificados:**
-
-*   **Autenticação:** Login e Registro para Clientes e Empresas.
-*   **Gestão de Empresas:** Cadastro de empresas e produtos/serviços.
-*   **Vitrine/Loja:** Visualização de produtos/serviços por empresa.
-*   **Reservas:** Funcionalidade principal para clientes realizarem reservas.
+*   **Autenticação Dupla:** Login e Registro para Clientes e Empresas.
+*   **Gestão de Produtos/Serviços:** Empresas podem registrar itens disponíveis para reserva.
+*   **Vitrine/Loja:** Clientes podem navegar e visualizar produtos/serviços.
+*   **Realização de Reservas:** Funcionalidade principal para clientes.
+*   **Estrutura de Serviços (Services):** Lógica de negócio refatorada para a camada de Services.
 
 ## 🛠️ Tecnologias Utilizadas
-
-O projeto é construído sobre uma pilha de tecnologias robusta e moderna:
 
 *   **Backend:** PHP 8.1+
 *   **Framework:** Laravel 10.x
 *   **Banco de Dados:** MySql
 *   **Gerenciador de Dependências:** Composer
 
-## ✨ Funcionalidades Atuais
-
-As seguintes funcionalidades foram implementadas e estão em fase de desenvolvimento:
-
-*   **Login e Registro de Usuário:** Sistema de autenticação seguro (com hashing de senha).
-*   **Login e Registro de Empresa:** Sistema de autenticação e cadastro dedicado para fornecedores.
-*   **Cadastro de Produtos/Serviços:** Empresas podem registrar itens disponíveis para reserva.
-*   **Visualização de Loja:** Clientes podem navegar pela vitrine de produtos de uma empresa específica.
-*   **Realização de Reservas:** Clientes podem reservar produtos/serviços.
-*   **Estrutura de Serviços (Services):** Refatoração inicial da lógica de negócio para a camada de Services (`LoginService`, `RegisterService`, etc.), promovendo um código mais limpo e manutenível.
-
 ## 🚀 Instalação e Configuração
 
-Siga os passos abaixo para configurar o ambiente de desenvolvimento:
+Siga os passos abaixo para configurar o ambiente de desenvolvimento.
 
 ### Pré-requisitos
 
 *   PHP >= 8.1
 *   Composer
-*   Um servidor web (Apache ou Nginx) ou Laravel Sail/Herd
+*   Um servidor web (Apache, Nginx, Laravel Sail ou Herd)
 *   Banco de dados MySql
 
 ### Passos de Instalação
 
 1.  **Clone o repositório:**
-    ```bash
+    
+    ```shell
     git clone https://github.com/brunoPP29/Gerenciador-de-Reservas.git
     cd Gerenciador-de-Reservas
     ```
-
+    
 2.  **Instale as dependências do Composer:**
-    ```bash
+    
+    ```shell
     composer install
     ```
-
+    
 3.  **Crie o arquivo de ambiente:**
-    ```bash
+    
+    ```shell
     cp .env.example .env
     ```
-
+    
 4.  **Gere a chave da aplicação:**
-    ```bash
+    
+    ```shell
     php artisan key:generate
     ```
-
-5.  **Configure o Banco de Dados:**
-    Edite o arquivo `.env` com as credenciais do seu banco de dados.
-
+    
+5.  **Configuração do Banco de Dados (MySQL ):**
+    
+    *   Crie um banco de dados vazio no seu servidor MySQL (ex: `gerenciador_reservas`).
+    *   Edite o arquivo `.env` e configure as credenciais de acesso.
+    
+    ```dotenv
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=gerenciador_reservas # Nome do banco de dados que você criou
+    DB_USERNAME=homestead          # Seu usuário MySQL (ex: root, homestead)
+    DB_PASSWORD=secret             # Sua senha MySQL
+    ```
+    
 6.  **Execute as Migrações:**
-    ```bash
+    
+    ```shell
     php artisan migrate
     ```
-
+    
 7.  **Inicie o Servidor de Desenvolvimento:**
-    ```bash
+    
+    ```shell
     php artisan serve
     ```
+    
     A aplicação estará acessível em `http://127.0.0.1:8000`.
 
 ## 🤝 Como Contribuir
 
 Contribuições são bem-vindas! Se você deseja contribuir, siga os passos:
 
-1.  Faça um *fork* do projeto.
-2.  Crie uma *branch* para sua funcionalidade (`git checkout -b feature/minha-feature`).
-3.  Faça o *commit* das suas alterações (`git commit -m 'feat: Adiciona nova funcionalidade X'`).
-4.  Faça o *push* para a *branch* (`git push origin feature/minha-feature`).
-5.  Abra um *Pull Request*.
-
-## 🗺️ Roadmap (O que falta no projeto)
-
-Esta seção lista as principais áreas que precisam de desenvolvimento ou melhoria para tornar o projeto completo e robusto.
-| Funcionalidade/Melhoria | Implementado | |
-| :--- | :---: | :--- |
-| **Documentação Completa**| Detalhar a API, o fluxo de dados e as regras de negócio. |
-| **Painel de Gerenciamento (Empresa)**| Interface para empresas visualizarem e gerenciarem suas reservas. |
-| **Painel de Gerenciamento (Cliente)**| Interface para clientes visualizarem, alterarem e cancelarem suas reservas. |
-| **Confirmação de Reserva (Email/Notificação)**| Implementar sistema de notificação para clientes e empresas. |
-
+1.  Faça um _fork_ do projeto.
+2.  Crie uma _branch_ para sua funcionalidade (`git checkout -b feature/minha-feature` ).
+3.  Faça o _commit_ das suas alterações (`git commit -m 'feat: Adiciona nova funcionalidade X'`).
+4.  Faça o _push_ para a _branch_ (`git push origin feature/minha-feature`).
+5.  Abra um _Pull Request_.
 
 ## 📄 Licença
 
 O projeto está licenciado sob a licença **MIT**. Veja o arquivo `LICENSE` para mais detalhes.
 
----
-
-*Desenvolvido por brunoPP29*_
+_Desenvolvido por brunoPP29_
