@@ -54,7 +54,7 @@
             <div class="flex items-center space-x-4">
                 <!-- Status/Nome da Empresa (Placeholder) -->
                 <p class="text-lg font-medium text-gray-300 bg-gray-700/50 px-4 py-2 rounded-full hidden sm:block">
-                    Bem-vindo, Nome Fantasia!
+                    Bem-vindo, <strong><i>{{ session('userEnterprise') }}</i></strong>!
                 </p>
                 
                 <!-- Botão de Logout -->
