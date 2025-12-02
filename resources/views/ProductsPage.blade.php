@@ -85,7 +85,7 @@
                 <!-- Filtro por Mínimo de Pessoas -->
                 <div>
                     <label for="filter-min-people" class="block text-sm font-medium text-gray-400 mb-1">Mínimo de Pessoas: <span id="min-people-value">1</span></label>
-                    <input type="range" id="filter-min-people" min="1" max="20" value="1" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer range-lg" oninput="document.getElementById('min-people-value').innerText = this.value; filterProducts()">
+                    <input type="range" id="filter-min-people" min="0" max="20" value="0" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer range-lg" oninput="document.getElementById('min-people-value').innerText = this.value; filterProducts()">
                 </div>
 
                 <!-- Filtro por Preço Máximo -->

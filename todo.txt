@@ -3,8 +3,4 @@
  -novos tipos de reservas(escolher quando criar o produto)
     =por diaria
 
--painel administrativo enterprise
-    =deletar e editar reservas
-    =editar produtos(nao vai poder mudar o tipo)
-
 -Tempo de cancelamento previo ajustavel no cadastro de produtos

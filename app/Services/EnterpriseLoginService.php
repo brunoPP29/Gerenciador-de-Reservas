@@ -32,6 +32,7 @@ public function login($req)
         //tem que ter de qualquer maneira se passa no HASH check
         session()->put('logadoenterprise', true);
         session()->put('userEnterprise', $enterpriseName);
+        session()->put('urlLink', preg_replace('/[^a-zA-Z]/', '_', $req->email));
         session()->put('tbProducts', preg_replace('/[^a-zA-Z]/', '_', $req->email.'_products'));
         session()->put('tbReservations', preg_replace('/[^a-zA-Z]/', '_', $req->email.'_reservations'));
         if (session('urlAfter') == true) {

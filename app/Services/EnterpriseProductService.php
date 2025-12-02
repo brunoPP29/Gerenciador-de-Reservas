@@ -29,7 +29,7 @@ public function checkLogin()
     public function register($req)
         {
             // nome seguro da tabela dinâmica
-            $tableName = preg_replace('/[^a-zA-Z0-9]/', '_', session('tableOrigin')) . '_products';
+            $tableName = session('tbProducts');
 
             // criar o objeto do modelo
             $product = new EnterpriseProduct;

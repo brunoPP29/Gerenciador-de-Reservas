@@ -65,6 +65,12 @@
                     </svg>
                     Logout
                 </a>
+                <input id="link" type="hidden" value="/reservas/public/loja/{{ session('urlLink') }}">
+                <button
+                    id="clickShare"        
+                    class="flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/30 transition duration-300 ease-in-out transform hover:scale-[1.05]">
+                    Compartilhar link da Loja
+            </button>
             </div>
         </header>
 
@@ -152,6 +158,27 @@
     </div>
 
     <script>
+        //Copy Share link
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const link = document.getElementById('link');
+                const button = document.getElementById('clickShare');
+
+                button.addEventListener('click', async () => {
+                    // Monta o link absoluto
+                    const fullUrl = window.location.origin + link.value;
+
+                    try {
+                        await navigator.clipboard.writeText(fullUrl);
+                        alert('Link copiado com sucesso:\n' + fullUrl);
+                    } catch(err) {
+                        alert('Erro ao copiar link');
+                        console.error(err);
+                    }
+                });
+            });
+
+        //
         // Função para atualizar a data e hora em tempo real
         function updateDateTime() {
             const now = new Date();

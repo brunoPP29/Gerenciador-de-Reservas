@@ -36,7 +36,6 @@ class StoreService{
                         session()->put('tbProducts', $empresa.'_products');
                         $tbProducts = session('tbProducts');
                         $productInfo = $this->getProduct($name, $tbProducts);
-
                         if ($productInfo->type === 'calendar') {
                             return view('BookCalendarPage', compact('tbReservation', 'tbProducts', 'name', 'productInfo', 'empresa'));
                         }
@@ -64,8 +63,8 @@ class StoreService{
     }
 
     public function getProduct($nameItem, $tbProducts){
-
-    return $product = DB::table($tbProducts)
+    $nameItem = str_replace('-', ' ', $nameItem);
+    return DB::table($tbProducts)
         ->where('name', $nameItem)
         ->first();
 
@@ -112,7 +111,9 @@ class StoreService{
             if($conflict) {
                 return $conflict;
             }else{
-
+            if (!isset($data['peoples'])) {
+                $data['peoples'] = '0';
+            }
                 if($data['peoples'] >= $data['min_people']){
                     //continua
                     $data['created_at'] = now();
