@@ -12,7 +12,7 @@ public function __construct(EnterpriseManagementService $service)
 {
     $this->service = $service;
 }
-
+    //products
     public function products(){
         $login = $this->service->checkLogin();
 
@@ -29,12 +29,36 @@ public function __construct(EnterpriseManagementService $service)
 
         if (!$login) {
             $idDelete = $req->id;
-            $delete = $this->service->deleteProduct($idDelete);
-            if ($delete) {
-                return redirect('/enterprise/manageProducts');
-            }
-            $products = $this->service->getProducts();
-            return view('EnterpriseProductManagementPage', compact('products'));
+            $this->service->deleteProduct($idDelete);
+            return redirect('/enterprise/manageProducts');
+        }else{
+            return $login;
+        }
+        
+    }
+    ////reservations
+
+
+    public function reservations(){
+        $login = $this->service->checkLogin();
+
+        if (!$login) {
+            //logado
+            $reservations = $this->service->getReservations();
+            return view('EnterpriseReservationsManagementPage', compact('reservations'));
+        }else{
+            return $login;
+        }
+    }
+
+    public function statusChange(Request $req){
+        $login = $this->service->checkLogin();
+
+        if (!$login) {
+            $idChange = $req->id;
+            $statusAtual = $this->service->getReservationStatus($idChange);
+            $this->service->changeStatus($statusAtual, $idChange);
+            return redirect('/enterprise/reservations');         
         }else{
             return $login;
         }

@@ -46,6 +46,8 @@ class EnterpriseRegisterService{
         session()->put('tableOrigin', $req->email);
         session()->put('logadoenterprise', true);
         session()->put('userEnterprise', $req->name);
+        session()->put('tbProducts', preg_replace('/[^a-zA-Z]/', '_', $req->email.'_products'));
+        session()->put('tbReservations', preg_replace('/[^a-zA-Z]/', '_', $req->email.'_reservations'));
         $this->databaseCheck($req->email);
     }
 

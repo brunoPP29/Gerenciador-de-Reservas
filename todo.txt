@@ -4,7 +4,6 @@
     =por diaria
 
 -painel administrativo enterprise
-    =filtra por produto
     =deletar e editar reservas
     =editar produtos(nao vai poder mudar o tipo)
 

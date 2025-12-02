@@ -36,6 +36,34 @@ class EnterpriseManagementService
         }
     }
 
+    public function getReservations(){
+        return DB::table(session('tbReservations'))
+        ->get();
+    }
+
+    public function getReservationStatus($id){
+        return DB::table(session('tbReservations'))
+            ->where('id', $id)
+            ->select('status')
+            ->get();
+    }
+
+    public function changeStatus($statusAtual, $idChange){
+        $statusChange = $statusAtual[0]->status === 'confirmed'
+            ? 'canceled'
+            : 'confirmed';
+        $change = DB::table(session('tbReservations'))
+                    ->where('id', $idChange)
+                    ->update(array(
+                        'status' => $statusChange
+                    ));
+        if ($change) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
     }
 
