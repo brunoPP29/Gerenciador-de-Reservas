@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-namespace App\Http\Controllers; use App\Http\Controllers\Controller; use Illuminate\Http\Request; use App\Services\EnterpriseManagementService; use App\Reservas; use App\Models\EnterpriseProduct; 
+namespace App\Http\Controllers; use App\Http\Controllers\Controller; use Illuminate\Http\Request; use App\Services\EnterpriseManagementService; use App\Reservas; use App\Models\EnterpriseProduct;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class EnterpriseManagementController extends Controller
 {
@@ -63,6 +64,17 @@ public function __construct(EnterpriseManagementService $service)
             return $login;
         }
         
+    }
+
+    public function deleteReservation(Request $req){
+        $login = $this->service->checkLogin();
+        if (!$login) {
+            $idDelete = $req->id;
+            $this->service->deleteReservation($idDelete);
+            return redirect('/enterprise/reservations');         
+        }else{
+            return $login;
+        }
     }
 
 }

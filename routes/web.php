@@ -35,5 +35,6 @@ Route::post('/client/profile', [ProfileController::class, 'edit']);
 Route::get('/enterprise/product/delete/{id}', [EnterpriseManagementController::class, 'deleteProduct']);
 Route::get('/enterprise/reservations', [EnterpriseManagementController::class, 'reservations']);
 Route::get('/enterprise/reservations/status/{id}', [EnterpriseManagementController::class, 'statusChange']);
+Route::get('/enterprise/reservations/delete/{id}', [EnterpriseManagementController::class, 'deleteReservation']);
 
 

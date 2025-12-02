@@ -64,6 +64,12 @@ class EnterpriseManagementService
         }
     }
 
+    public function deleteReservation($id){
+        DB::table(session('tbReservations'))
+            ->where('id', $id)
+            ->delete();
+    }
+
 
     }
 
