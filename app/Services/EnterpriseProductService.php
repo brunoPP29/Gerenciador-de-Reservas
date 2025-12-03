@@ -46,6 +46,7 @@ public function checkLogin()
             $product->description = $req->description ?? '';
             $product->type = $req->type ?? 'interval';
             $product->min_people = $req->min_people ?? '0';
+            $product->cancel_time = $req->cancel_time ?? 24;
 
             // salva usando Eloquent
             $product->save();

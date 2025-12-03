@@ -51,6 +51,17 @@
 
         {{-- Lista de Reservas --}}
         <div class="space-y-6">
+                    @if(session('error'))
+            <div class="bg-red-100 dark:bg-red-900/50 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-300 p-3 rounded-xl text-sm font-medium transition duration-300">
+                {{ session('error') }}
+            </div>
+        @endif
+        @if(session('success'))
+            <div class="bg-emerald-100 dark:bg-emerald-900/50 border border-emerald-400 dark:border-emerald-700 text-emerald-700 dark:text-emerald-300 p-4 rounded-xl text-base font-medium space-y-2 transition duration-300">
+                <p class="font-bold">Reserva Confirmada!</p>
+                <p>{{ session('success') }}</p>
+            </div>
+        @endif
             @if(empty($reservations))
                 <div class="bg-gray-800 rounded-xl shadow-2xl p-8 text-center border border-gray-700">
                     <p class="text-xl text-gray-300">Nenhuma reserva encontrada.</p>

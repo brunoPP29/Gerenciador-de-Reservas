@@ -86,6 +86,7 @@ class EnterpriseRegisterService{
                 $table->text('description')->nullable(); // descrição
                 $table->text('type')->default('interval');
                 $table->integer('min_people')->default(0);
+                $table->integer('cancel_time')->default(24);
             });
         }
 
@@ -114,7 +115,7 @@ class EnterpriseRegisterService{
 
                 // status
                 $table->string('status')->default('confirmed');
-                $table->number('peoples')->nullable();
+                $table->integer('peoples')->nullable();
 
                 $table->timestamps();
             });

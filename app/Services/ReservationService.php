@@ -3,7 +3,8 @@
 namespace App\Services;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
- use App\Models\Store;
+use Carbon\Carbon;
+use App\Models\Store;
 
 class ReservationService{
 
@@ -62,11 +63,24 @@ public function getReservations(){
 }
 
 
-    public function delete($infos){
-        $id = $infos->id;
-        $table = $infos->table;
+public function delete($infos) {
+    $id = $infos->id;
+    $table = $infos->table;
 
-        \App\Models\Store::query()
+    $reserva = DB::table($table)->where('id', $id)->first();
+    if (!$reserva) return 'notfound';
+
+    $product = DB::table(session('tbProducts'))->where('id', $reserva->product_id)->first();
+    if (!$product) return 'notfound';
+
+    $now = Carbon::now();
+    $reservaDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $reserva->date . ' ' . $reserva->start_time);
+
+    if ($now->diffInHours($reservaDateTime, false) < $product->cancel_time) {
+        return 'expired';
+    }
+
+        Store::query()
             ->from($table) // define tabela dinamicamente
             ->where('id', $id)
             ->update([
@@ -76,7 +90,7 @@ public function getReservations(){
             }
 
 
-        }
+}
     
 
 

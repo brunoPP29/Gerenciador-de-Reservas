@@ -149,6 +149,11 @@
                     <input type="number" id="min_people" placeholder="Ex: 1" name="min_people" required
                            class="input-focus w-full px-4 py-3 bg-dark-input border border-slate-600 rounded-lg placeholder-slate-400 text-gray-100 transition duration-200 ease-in-out">
                 </div>
+                <div>
+                    <label for="cancel_time" class="block text-sm font-medium text-slate-300 mb-1">Tempo mínimo antes de cancelamento (horas)</label>
+                    <input type="number" id="cancel_time" placeholder="Ex: 24" name="cancel_time" required
+                               class="input-focus w-full px-4 py-3 bg-dark-input border border-slate-600 rounded-lg placeholder-slate-400 text-gray-100 transition duration-200 ease-in-out">
+                </div>
             </div>
 
             <!-- Seção 3: Horários de Operação -->

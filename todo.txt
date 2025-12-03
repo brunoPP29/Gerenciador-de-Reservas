@@ -1,4 +1,4 @@
--services nao devem retornar views, os controllers fazerm isso
+
 
 
 -Tempo de cancelamento previo ajustavel no cadastro de produtos
