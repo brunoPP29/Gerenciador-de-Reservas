@@ -38,9 +38,9 @@ public function login($req)
         if (session('urlAfter') == true) {
             $urlAfter = session('urlAfter');
             session()->put('urlAfter', null);
-            return redirect((string) $urlAfter);
+            return [$urlAfter, 'redirectUrlAfter'];
         }else{
-            return view('EnterprisePage');
+            return 'EnterprisePage';
         }
     }
 

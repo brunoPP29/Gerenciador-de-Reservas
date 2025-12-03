@@ -36,7 +36,7 @@ class ProfileService{
     }
 
     session(['userName' => $newUser]);
-    return back()->with('success', 'Usuário alterado com sucesso!');
+    return 'UserEdited';
     }
 
 
@@ -49,17 +49,17 @@ class ProfileService{
         $user = Users::where('user', $userName)->first();
 
         if (!$user) {
-            return back()->with('error', 'Usuário não encontrado');
+            return 'noUser';
         }
 
         if (!Hash::check($confirm, $user->password)) {
-            return back()->with('error', 'Senha incorreta');
+            return 'incorrectPassword';
         }
 
         $user->password = Hash::make($newPassword);
         $user->save();
 
-        return back()->with('success', 'Senha alterada com sucesso!');
+        return 'success';
     }
 
 }

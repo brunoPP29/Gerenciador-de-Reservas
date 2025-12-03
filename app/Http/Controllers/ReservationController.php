@@ -19,14 +19,22 @@ class ReservationController extends Controller
     public function index()
     {   
         $redirect = $this->service->checkLogin();
-        return $redirect;
+        if (isset($redirect[1]) && $redirect[1] === 'AppointmentsPage') {
+            $compact = $redirect[0];
+            return view($redirect[1], compact('compact'));
+        }
+        if ($redirect === 'redirectUrl') {
+            return redirect('/');
+        }
 
     }
 
     public function deleteItem(Request $infos){
         if (session('logado')) {
             $cancel = $this->service->delete($infos);
-            return $cancel;
+            if ($cancel === 'comeback') {
+                redirect('client/my_appointments');
+            }
         }else{
             return view('LoginPage');
         }

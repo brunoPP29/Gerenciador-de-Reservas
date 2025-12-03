@@ -1,5 +1,8 @@
--confirmação de e-mail de reserva
 -services nao devem retornar views, os controllers fazerm isso
 
 
 -Tempo de cancelamento previo ajustavel no cadastro de produtos
+-confirmação de e-mail de reserva
+-cookies
+
+-analisar toda a estrutura e funcionamento de cada coisa para ver oq da pra melhorar

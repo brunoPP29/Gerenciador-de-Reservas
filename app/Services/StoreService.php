@@ -26,22 +26,24 @@ class StoreService{
     public function checkEnterprise($empresa, $name){
         if (Schema::hasTable(session('tbProducts'))) {
             $produtos = DB::table(session('tbProducts'))->get();
-                        //se tiver parametros
-                        
-                        if ($name != null) {
-                        $productInfo = $this->getProduct($name);
-                        if ($productInfo->type === 'calendar') {
-                            return view('BookCalendarPage', compact('name', 'productInfo', 'empresa'));
-                        }
-
-                        return view('BookPage', compact('name', 'productInfo'));
-                    }else{
-                        $dadosEmpresa = $this->getEnterprise($empresa);
-                        return view('ProductsPage', compact('produtos', 'dadosEmpresa', 'empresa'));
-                    }
-        } else {
-            return view('404Page');
-        }
+            //
+                                //se tiver DENTRO DO ITEM PARA RESERVAR
+                                if ($name != null) {
+                                $productInfo = $this->getProduct($name);
+                                if ($productInfo->type === 'calendar') {
+                                    return ['BookCalendarPage', $productInfo];
+                                }
+                                return ['BookPage', $productInfo];
+                                ///
+                            }else{
+                                //GET PRODUCTS
+                                $dadosEmpresa = $this->getEnterprise($empresa);
+                                return ['ProductsPage', $dadosEmpresa, $produtos];
+                            }
+            } else {
+                //se não tiver a tabela/empresa
+                return '404Page';
+            }
     }
 
     public function getEnterprise($empresa){
@@ -50,7 +52,7 @@ class StoreService{
         $emailChecked = EnterpriseLogin::where('email', $email)->first();
 
         if ($emailChecked != '') {
-            return $enterpriseInfos = $emailChecked;
+            return $emailChecked;
         }
 
 
@@ -66,7 +68,7 @@ class StoreService{
 
     }
 
-    public function hasConflict($table, $date, $start, $end, $id)
+    public function hasConflict($table, $date, $start, $end, $id, $pessoas)
         {
             $product = DB::table(session('tbProducts'))->where('id', $id)->first();
             $minutos = Carbon::parse($start)->diffInMinutes($end);
@@ -74,13 +76,13 @@ class StoreService{
                 $date = Carbon::parse($date);
                 $hoje = Carbon::today();
                 if ($date->lt($hoje)) {
-                    return back()->with('error', 'Select a future day');
+                    return 'futureday';
 
                 } else {
                 //continua
                 }
             }else{
-                return back()->with('error', 'Reservations can only be made in '.$product->duration_minutes.'-minute blocks.');
+                return ['minutesblock', $product->duration_minutes];
             }
 
                 $conflict = DB::table($table)
@@ -95,34 +97,37 @@ class StoreService{
                     // não existe conflito — segue o fluxo
                 } else {
                     if ($conflict->status === 'confirmed') {
-                        return back()->with('error', 'This time slot is already booked.');
+                        return 'alreadybooked';
+                    }
+                }
+
+                if (isset($pessoas)) {
+                    if ($pessoas <= $product->min_people) {
+                        return 'minpeople';
                     }
                 }
         }
 
     public function saveReservation($table, $data){
-            $conflict = $this->hasConflict($table, $data['date'], $data['start_time'], $data['end_time'], $data['product_id']);
+            $conflict = $this->hasConflict($table, $data['date'], $data['start_time'], $data['end_time'], $data['product_id'], $data['peoples'] ?? null);
             if($conflict) {
                 return $conflict;
             }else{
-            if (!isset($data['peoples'])) {
-                $data['peoples'] = '0';
-            }
-                if($data['peoples'] >= $data['min_people']){
                     //continua
                     $data['created_at'] = now();
                     $data['updated_at'] = now();
-                    
+                    if (isset($data['peoples'])) {
+                        
+                    }else{
+                        $data['peoples'] = null;
+                    }
                     $data = Arr::except($data, ['duration_minutes', 'min_people']);
                 if(DB::table($table)->insert($data)){
                     session()->regenerate();
-                    return back()->with('success', 'A reserva foi concluída com sucesso');
+                    return 'success';
                 }else{
-                    return back()->with('error', 'Aconteceu um erro! Caso persista entre em contato');
+                    return 'error';
                 }
-            }else{
-                return back()->with('error', 'Verifique a quantidade de pessoas mínimas');
-            }
             }
 
 
@@ -213,7 +218,7 @@ class StoreService{
         ->first();
 
     if (!$product) {
-    return redirect($baseUrl)->with('error', 'Produto não encontrado!');
+        return ['error404', $baseUrl];
     }
 
     // Calcula end_time baseado no start_time + duração
@@ -226,7 +231,7 @@ class StoreService{
     if ($req->peoples >= $product->min_people) {
 
     }else{
-         return redirect($baseUrl)->with('error', 'Selecione a quantidade de pessoas mínimas!');
+         return ['minpeople', $baseUrl];
     }
 
     // Monta a reserva
@@ -248,19 +253,9 @@ class StoreService{
     session()->regenerate();
 
 
-    return redirect($baseUrl)->with('success', 'Reserva criada com sucesso!');
+    return ['success', $baseUrl];
 
 
-}
-
-public function checkMinPeople($peoples, $min_people){
-    if ($peoples >= $min_people) {
-        return true;
-    }else{
-        $baseUrl = dirname(request()->url());
-        return redirect($baseUrl)->with('error', 'Insira a quantidade mínima de pessoas!');
-
-    }
 }
 
 

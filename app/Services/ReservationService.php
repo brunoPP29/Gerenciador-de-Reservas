@@ -11,12 +11,12 @@ public function checkLogin()
 {
     if (session('logado') === true) {
         $reservations = $this->getReservations();
-        return view('AppointmentsPage', compact('reservations'));
+        return [$reservations, 'AppointmentsPage'];
 
     } else {
         session()->put('logado', false);
         session()->put('urlAfter', url()->current());
-        return redirect('https://localhost/reservas/public/'); // indica que não está logado
+        return 'redirectUrl'; // indica que não está logado
     }
 }
 
@@ -72,7 +72,7 @@ public function getReservations(){
             ->update([
                 'status' => 'canceled'
             ]);
-            return redirect('client/my_appointments');
+            return 'comeback';
             }
 
 

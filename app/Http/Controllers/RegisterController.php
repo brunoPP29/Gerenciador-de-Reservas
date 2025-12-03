@@ -20,7 +20,12 @@ class RegisterController extends Controller{
 
     public function register(Request $req){
         $validationFields = $this->service->checkFields($req);
-        return $this->service->register($req);
+        $register = $this->service->register($req);
+        if ($register === 'success') {
+            return back()->with('success', 'Registrado com sucesso!');
+        }else{
+            return back()->with('error', 'Houve algum erro no processo de registro');
+        }
 
         
 

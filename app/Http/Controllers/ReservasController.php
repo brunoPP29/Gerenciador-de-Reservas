@@ -24,13 +24,29 @@ class ReservasController extends Controller
 
     public function login(Request $req)
     {
-        return $this->service->login($req);
-
+        $login = $this->service->login($req);
+        if ($login === 'incorrect') {
+            return back()->with('error', 'Senha ou usuário incorretos');
+        }
+        if (isset($login[1])) {
+            if ($login[1] === 'redirectUrl') {
+                return redirect($login[0]);
+            }
+            if ($login[1] === 'HomePage') {
+                $statusReservations = $login[0];
+                return view($login[1], compact('statusReservations'));
+            }
+        }
     }
 
 
     public function loggout(){
-        return $this->service->loggout();
+        $loggout = $this->service->loggout();
+        if ($loggout === 'loggedOut') {
+            return redirect('/');
+        }else{
+            return back()->with('error', 'Não foi possível deslogar');
+        }
     }
 }
 

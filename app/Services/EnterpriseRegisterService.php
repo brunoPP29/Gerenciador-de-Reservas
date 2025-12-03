@@ -84,6 +84,8 @@ class EnterpriseRegisterService{
                 $table->time('opens_at')->default('08:00'); // abre
                 $table->time('closes_at')->default('22:00'); // fecha
                 $table->text('description')->nullable(); // descrição
+                $table->text('type')->default('interval');
+                $table->integer('min_people')->default(0);
             });
         }
 
@@ -112,6 +114,7 @@ class EnterpriseRegisterService{
 
                 // status
                 $table->string('status')->default('confirmed');
+                $table->number('peoples')->nullable();
 
                 $table->timestamps();
             });

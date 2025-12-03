@@ -40,17 +40,17 @@ class LoginService
                 session()->put('userName', $userInput);
                 $urlAfter = session('urlAfter');
                 session()->put('urlAfter', null);
-                return redirect((string) $urlAfter);
+                return [$urlAfter, 'redirectUrl'];
             }else{
             session()->put('logado', true);
             session()->put('userName', $userInput);
             $statusReservations = $this->getStatus();
-            return view('HomePage', compact('statusReservations'));
+            return [$statusReservations, 'HomePage'];
             }
         }
 
         // Se falhar login
-        return redirect()->back()->withInput()->with('error', 'Usuário ou senha incorretos!');
+        return 'incorrect';
 
     }
 
@@ -58,7 +58,7 @@ class LoginService
         session()->put('logado', false);
         session()->put('logadoenterprise', false);
         session()->put('userName', false);
-        return redirect('/');
+        return 'loggedOut';
     }
 
     public function getStatus(){

@@ -14,7 +14,7 @@ class EnterpriseManagementService
         }else{
             $url = url()->current();;
             session()->put('urlAfter', $url);
-            return redirect('enterprise');
+            return 'enterprise';
         }
     }   
 

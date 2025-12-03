@@ -29,14 +29,14 @@ class RegisterService{
 
     public function register($req){
 
-    $user = Register::create([
+    Register::create([
         'user' => $req->user,
         'email' => $req->email,
         'password' => Hash::make($req->password), // nunca armazene senha sem hash
     ]);
         session()->put('logado', true);
         session()->put('userName', $req->user);
-        return redirect()->back()->with('success', 'User registered successfully!');
+        return 'success';
     }
 
 }

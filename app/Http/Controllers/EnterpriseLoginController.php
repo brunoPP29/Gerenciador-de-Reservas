@@ -21,7 +21,14 @@ class EnterpriseLoginController extends Controller{
     }
 
     public function login(Request $req){
-        return $this->service->login($req);
+        $login = $this->service->login($req);
+        if (isset($login[1]) && $login[1] === 'redirectUrlAfter') {
+            return redirect($login[0]);
+        }else{
+            return view($login);
+        }
+
+
 
     }
 

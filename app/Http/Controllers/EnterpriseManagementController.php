@@ -21,7 +21,9 @@ public function __construct(EnterpriseManagementService $service)
             $products = $this->service->getProducts();
             return view('EnterpriseProductManagementPage', compact('products'));
         }else{
-            return $login;
+            if ($login === 'enteprise') {
+                return $login;
+            }
         }
     }
 
