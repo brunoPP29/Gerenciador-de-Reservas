@@ -46,8 +46,8 @@ class EnterpriseRegisterService{
         session()->put('tableOrigin', $req->email);
         session()->put('logadoenterprise', true);
         session()->put('userEnterprise', $req->name);
-        session()->put('tbProducts', preg_replace('/[^a-zA-Z]/', '_', $req->email.'_products'));
-        session()->put('tbReservations', preg_replace('/[^a-zA-Z]/', '_', $req->email.'_reservations'));
+        session()->put('tbProducts', preg_replace('/[^a-z0-9]/', '_', $req->email) . '_products');
+        session()->put('tbReservations', preg_replace('/[^a-z0-9]/', '_', $req->email) . '_reservations');
         $this->databaseCheck($req->email);
     }
 
@@ -61,7 +61,7 @@ class EnterpriseRegisterService{
     public function databaseCheck($email)
     {
         // nome seguro para tabelas
-        $tableBase = preg_replace('/[^a-zA-Z0-9]/', '_', $email);
+        $tableBase = preg_replace('/[^a-zA-Z]/', '_', $email);
 
         $productsTable = $tableBase . '_products';
         $reservationsTable = $tableBase . '_reservations';

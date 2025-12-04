@@ -50,7 +50,7 @@ public function __construct(EnterpriseManagementService $service)
             $reservations = $this->service->getReservations();
             return view('EnterpriseReservationsManagementPage', compact('reservations'));
         }else{
-            return $login;
+            return redirect($login);
         }
     }
 

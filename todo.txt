@@ -1,7 +1,6 @@
 
 
 
--Tempo de cancelamento previo ajustavel no cadastro de produtos
 -confirmação de e-mail de reserva
 -cookies
 

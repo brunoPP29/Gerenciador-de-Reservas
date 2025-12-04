@@ -55,9 +55,8 @@ class LoginService
     }
 
     public function loggout(){
-        session()->put('logado', false);
-        session()->put('logadoenterprise', false);
-        session()->put('userName', false);
+        session()->invalidate();
+        session()->regenerateToken();
         return 'loggedOut';
     }
 

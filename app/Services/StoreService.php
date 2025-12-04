@@ -2,10 +2,13 @@
 
 namespace App\Services;
 use App\Models\EnterpriseLogin;
+use App\Models\Users;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Mail;
+
 
 
 class StoreService{
@@ -102,7 +105,7 @@ class StoreService{
                 }
 
                 if (isset($pessoas)) {
-                    if ($pessoas <= $product->min_people) {
+                    if ($pessoas < $product->min_people) {
                         return 'minpeople';
                     }
                 }
@@ -124,6 +127,8 @@ class StoreService{
                     $data = Arr::except($data, ['duration_minutes', 'min_people']);
                 if(DB::table($table)->insert($data)){
                     session()->regenerate();
+                    //send email
+                    $this->sendEmails($data, $table);
                     return 'success';
                 }else{
                     return 'error';
@@ -132,6 +137,75 @@ class StoreService{
 
 
         }
+
+    public function sendEmails($data){
+        $emailClient = Users::where('user', $data['client_name'])
+                        ->select('email')
+                        ->get();
+        
+        $reservaInfo = [
+            'date'       => $data['date'],
+            'start_time' => $data['start_time'],
+            'end_time'   => $data['end_time'],
+            'product_id' => $data['product_id'],
+            'peoples'    => $data['peoples'],
+        ];
+
+        $mensagemHTML = "
+        <html>
+        <head>
+        <style>
+            body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            }
+            .reserva-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            }
+            .reserva-container h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            }
+            .reserva-item {
+            margin-bottom: 10px;
+            }
+            .label {
+            font-weight: bold;
+            }
+        </style>
+        </head>
+        <body>
+        <div class='reserva-container'>
+            <h2>Nova Reserva</h2>
+            <div class='reserva-item'><span class='label'>Data:</span> {$reservaInfo['date']}</div>
+            <div class='reserva-item'><span class='label'>Início:</span> {$reservaInfo['start_time']}</div>
+            <div class='reserva-item'><span class='label'>Fim:</span> {$reservaInfo['end_time']}</div>
+            <div class='reserva-item'><span class='label'>Produto ID:</span> {$reservaInfo['product_id']}</div>
+            <div class='reserva-item'><span class='label'>Pessoas:</span> {$reservaInfo['peoples']}</div>
+        </div>
+        </body>
+        </html>
+        ";
+
+        $this->enviarEmailReserva($emailClient[0]['email'], $mensagemHTML);
+        $this->enviarEmailReserva(session('emailEnterprise'), $mensagemHTML);
+
+    }
+
+    public function enviarEmailReserva($email, $mensagemHTML) {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            Mail::html($mensagemHTML, function ($msg) use ($email) {
+                $msg->to($email)
+                    ->subject('Reserva confirmada!');
+            });
+        }
+    }
 
 
     public function getHours($req, $tbProducts)
