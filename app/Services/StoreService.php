@@ -323,6 +323,7 @@ class StoreService{
     ];
 
     DB::table($table)->insert($insert);
+    $this->sendEmails($insert);
 
     session()->regenerate();
 
