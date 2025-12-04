@@ -28,13 +28,13 @@ public function login($req)
 
     
     if ($infos && Hash::check($req->password, $infos->password)) {
-        $enterpriseName = EnterpriseLogin::where('email', $req->email)->value('name');
+        $enterpriseName = $infos->name;
         //tem que ter de qualquer maneira se passa no HASH check
         session()->put('logadoenterprise', true);
         session()->put('userEnterprise', $enterpriseName);
-        session()->put('urlLink', preg_replace('/[^a-z0-9]/', '_', $req->email));
-        session()->put('tbProducts', preg_replace('/[^a-z0-9]/', '_', $req->email) . '_products');
-        session()->put('tbReservations', preg_replace('/[^a-z0-9]/', '_', $req->email) . '_reservations');
+        session()->put('urlLink', preg_replace('/[^a-zA-z0-9]/', '_', $infos->name));
+        session()->put('tbProducts', preg_replace('/[^a-zA-z0-9]/', '_', $infos->name) . '_products');
+        session()->put('tbReservations', preg_replace('/[^a-zA-z0-9]/', '_', $infos->name) . '_reservations');
         if (session('urlAfter') == true) {
             $urlAfter = session('urlAfter');
             session()->put('urlAfter', null);

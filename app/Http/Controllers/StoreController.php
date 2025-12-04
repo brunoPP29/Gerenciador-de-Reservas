@@ -19,10 +19,9 @@ class StoreController extends Controller
 
         session()->put('tbProducts', $empresa.'_products');
         session()->put('tbReservations', $empresa.'_reservations');
-        $email = preg_replace('/_/', '@', $empresa, 1);
-        $email = preg_replace('/_(?=[^_]*$)/', '.', $email);
-        session()->put('emailEnterprise', $email);
-        $databaseOrigin = $this->service->checkEnterprise($empresa, $name);
+        $enterprise = $this->service->getEnterprise($empresa);
+        session()->put('emailEnterprise', $enterprise->email);
+        $databaseOrigin = $this->service->checkEnterprise($enterprise, $name);
         if ($databaseOrigin === '404Page') {
             return view($databaseOrigin);
         }

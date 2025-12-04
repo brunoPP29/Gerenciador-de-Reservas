@@ -66,11 +66,12 @@ public function getReservations(){
 public function delete($infos) {
     $id = $infos->id;
     $table = $infos->table;
+    $productTable = str_replace('_reservations', '_products', $table);
 
     $reserva = DB::table($table)->where('id', $id)->first();
     if (!$reserva) return 'notfound';
 
-    $product = DB::table(session('tbProducts'))->where('id', $reserva->product_id)->first();
+    $product = DB::table($productTable)->where('id', $reserva->product_id)->first();
     if (!$product) return 'notfound';
 
     $now = Carbon::now();

@@ -43,12 +43,13 @@ class EnterpriseRegisterService{
         ]);
 
         // cria tabelas personalizadas da empresa
-        session()->put('tableOrigin', $req->email);
+        session()->put('tableOrigin', $req->name);
         session()->put('logadoenterprise', true);
+        session()->put('urlLink', preg_replace('/[^a-zA-z0-9]/', '_', $req->name));
         session()->put('userEnterprise', $req->name);
-        session()->put('tbProducts', preg_replace('/[^a-z0-9]/', '_', $req->email) . '_products');
-        session()->put('tbReservations', preg_replace('/[^a-z0-9]/', '_', $req->email) . '_reservations');
-        $this->databaseCheck($req->email);
+        session()->put('tbProducts', preg_replace('/[^a-zA-Z0-9]/', '_', $req->name) . '_products');
+        session()->put('tbReservations', preg_replace('/[^a-zA-Z0-9]/', '_', $req->name) . '_reservations');
+        $this->databaseCheck($req->name);
     }
 
 
@@ -58,10 +59,10 @@ class EnterpriseRegisterService{
      * - tabela de reservas
      * usando o email como base do nome da tabela
      */
-    public function databaseCheck($email)
+    public function databaseCheck($name)
     {
         // nome seguro para tabelas
-        $tableBase = preg_replace('/[^a-zA-Z]/', '_', $email);
+        $tableBase = preg_replace('/[^a-zA-Z]/', '_', $name);
 
         $productsTable = $tableBase . '_products';
         $reservationsTable = $tableBase . '_reservations';
@@ -97,7 +98,7 @@ class EnterpriseRegisterService{
          */
         if (!Schema::hasTable($reservationsTable)) {
 
-            Schema::create($reservationsTable, function (Blueprint $table) use ($productsTable) {
+            Schema::create($reservationsTable, function (Blueprint $table) {
 
                 $table->id();
 

@@ -40,7 +40,7 @@ class StoreService{
                                 ///
                             }else{
                                 //GET PRODUCTS
-                                $dadosEmpresa = $this->getEnterprise($empresa);
+                                $dadosEmpresa = $empresa;
                                 return ['ProductsPage', $dadosEmpresa, $produtos];
                             }
             } else {
@@ -50,13 +50,9 @@ class StoreService{
     }
 
     public function getEnterprise($empresa){
-        $parts = explode('_', $empresa);
-        $email =  strtolower($parts[0].'@'.implode('.', array_slice($parts, 1)));
-        $emailChecked = EnterpriseLogin::where('email', $email)->first();
-
-        if ($emailChecked != '') {
-            return $emailChecked;
-        }
+        $empresa = str_replace('_', ' ', $empresa);
+        return EnterpriseLogin::where('name', $empresa)
+                        ->first();
 
 
     }

@@ -1,7 +1,3 @@
 
 
-
--confirmação de e-mail de reserva
--cookies
-
 -analisar toda a estrutura e funcionamento de cada coisa para ver oq da pra melhorar

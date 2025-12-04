@@ -20,7 +20,6 @@ class EnterpriseRegisterController extends Controller{
 
     public function register(Request $req){
         $validationFields = $this->service->checkFields($req);
-        $database = $this->service->databaseCheck($req->email);
         $insert = $this->service->register($req);
         return redirect()->back()->with('success', 'Enterprise registered successfully!');
         
